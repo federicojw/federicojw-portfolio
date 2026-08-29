@@ -1917,3 +1917,52 @@ body.cursor-active .cursor-glow {
     max-width: 100% !important;
   }
 }
+
+@media (max-width: 950px) {
+  .exp-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  
+  .exp-row .timeline-item {
+    display: grid !important;
+    grid-template-columns: 90px 1px 1fr !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .timeline-content {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .timeline-content h3, 
+  .timeline-content p, 
+  .organization {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+
+  .exp-row .timeline-item::before {
+    display: block !important;
+    left: 114px !important; /* Menyesuaikan posisi garis timeline di mobile */
+    bottom: -30px !important;
+  }
+
+  .experience-photocard {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .exp-row .timeline-item {
+    grid-template-columns: 1fr !important;
+    padding-left: 26px !important;
+  }
+  
+  .exp-row .timeline-item::before {
+    left: 7px !important;
+  }
+}
