@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Federico Justian Wijono (Fico) — Computer Science student, Front-End Developer, and aspiring Software Engineer.">
+  <meta name="theme-color" content="#0b1118">
+  <title>Federico Justian Wijono | Software Engineer</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo-web.svg">
+  <link rel="shortcut icon" href="assets/logo-web.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="scroll-progress-bar" id="scrollProgress"></div>
+  <div class="page-glow page-glow--one"></div>
+  <div class="page-glow page-glow--two"></div>
+  <canvas class="dna-canvas" id="dnaCanvas" aria-hidden="true"></canvas>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a class="brand" href="#hero" aria-label="Federico Justian Wijono home">
+        <span class="brand-mark">&lt;/&gt;</span>
+        <span>federicojw<span class="accent">.com</span></span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="siteNav" aria-label="Primary navigation">
+        <a class="nav-link active" href="#hero">HOME</a>
+        <a class="nav-link" href="#about">ABOUT</a>
+        <a class="nav-link" href="#skills">SKILLS</a>
+        <a class="nav-link" href="#experience">EXPERIENCE</a>
+        <a class="nav-link" href="#projects">PROJECTS</a>
+        <a class="nav-link" href="#education">EDUCATION</a>
+        <a class="nav-link" href="#credentials">CREDENTIALS</a>
+        <a class="nav-link" href="#contact">CONTACT</a>
+      </nav>
+
+      <a class="nav-cta" href="mailto:federicojwwork@gmail.com">Let's talk <span>↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="status-dot"></span> available for internship opportunities</p>
+
+          <h1 class="hero-title">
+            Hi, I'm <span class="gradient-text">Fico</span>.
+            <br>
+            I'm a <span class="role-rotator-wrap"><span class="role-rotator" id="roleRotator" aria-live="polite">Software Engineer</span><span class="typing-caret" aria-hidden="true"></span></span>
+            <br>
+            <span class="code-underline">in the making.</span>
+          </h1>
+
+          <p class="hero-description">
+            Computer Science student at BINUS University, focused on Front-End Development
+            and growing toward Software Engineering. I enjoy turning ideas into responsive,
+            practical web experiences.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">View my work <span>↗</span></a>
+            <a class="button button-secondary" href="assets/Federico_Justian_Wijono_CV.pdf" download>Download CV <span>↓</span></a>
+          </div>
+
+          <div class="hero-links" aria-label="Social links">
+            <a class="social-link" href="https://github.com/federicojw" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-tooltip="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.24c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.33-1.77-1.33-1.77-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.45 11.45 0 0 1 6-.01c2.3-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.6-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
+            </a>
+            <a class="social-link" href="https://linkedin.com/in/federicojw" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.1 3.5a2.1 2.1 0 1 1-4.2 0 2.1 2.1 0 0 1 4.2 0ZM1.1 8h4V22h-4V8Zm6.4 0h3.8v1.9h.05c.53-1 1.82-2.1 3.75-2.1 4 0 4.74 2.63 4.74 6.05V22h-4v-7.2c0-1.72-.03-3.93-2.4-3.93-2.4 0-2.77 1.87-2.77 3.8V22h-4V8Z"/></svg>
+            </a>
+            <a class="social-link" href="mailto:federicojwwork@gmail.com" aria-label="Email" data-tooltip="Email">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 5.5h19v13h-19v-13Zm0 .5 9.5 7 9.5-7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="code-window reveal reveal-delay" aria-label="Developer code illustration">
+          <div class="window-top">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span class="window-file">federicojw.js</span>
+            <span class="window-lang">JavaScript</span>
+          </div>
+          <div class="code-body">
+            <div class="code-line"><span class="line-number">01</span><span><span class="keyword">const</span> <span class="variable">developer</span> = {</span></div>
+            <div class="code-line"><span class="line-number">02</span><span>&nbsp;&nbsp;name: <span class="string">'Fico'</span>,</span></div>
+            <div class="code-line"><span class="line-number">03</span><span>&nbsp;&nbsp;fullName: <span class="string">'Federico Justian Wijono'</span>,</span></div>
+            <div class="code-line"><span class="line-number">04</span><span>&nbsp;&nbsp;role: <span class="string">'Software Engineer'</span>,</span></div>
+            <div class="code-line"><span class="line-number">05</span><span>&nbsp;&nbsp;focus: [</span></div>
+            <div class="code-line"><span class="line-number">06</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Front-End'</span>,</span></div>
+            <div class="code-line"><span class="line-number">07</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Web Development'</span>,</span></div>
+            <div class="code-line"><span class="line-number">08</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'SQL & Databases'</span></span></div>
+            <div class="code-line"><span class="line-number">09</span><span>&nbsp;&nbsp;],</span></div>
+            <div class="code-line"><span class="line-number">10</span><span>&nbsp;&nbsp;learning: <span class="boolean">true</span></span></div>
+            <div class="code-line"><span class="line-number">11</span><span>};</span></div>
+            <div class="code-line"><span class="line-number">12</span><span></span></div>
+            <div class="code-line"><span class="line-number">13</span><span><span class="comment">// Learn → Practice → Build → Improve</span></span></div>
+            <div class="cursor-line"><span class="cursor"></span></div>
+          </div>
+          <div class="window-status">
+            <span>main</span><span>UTF-8</span><span>JavaScript</span><span>Ln 13, Col 42</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-indicator" href="#about" aria-label="Scroll to about section">
+        <span>scroll to explore</span><span class="scroll-arrow">↓</span>
+      </a>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-number">01</span>
+          <div><p class="eyebrow">who I am</p><h2>About me</h2></div>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-terminal reveal">
+            <div class="terminal-top"><span>about-me.txt</span><span>~/federicojw</span></div>
+            <div class="terminal-content">
+              <p><span class="prompt">$</span> cat about-me.txt</p>
+              <p class="terminal-output">Computer Science student in BINUS University's Master of Computer Science (Master Track) program.</p>
+              <p class="terminal-output">Building practical web experiences while strengthening software engineering fundamentals.</p>
+              <p><span class="prompt">$</span> status</p>
+              <p class="terminal-output success">● open to internship opportunities</p>
+            </div>
+          </div>
+
+          <div class="about-overview reveal reveal-delay">
+            <div class="overview-title">profile overview</div>
+            <div class="overview-grid">
+              <div class="overview-item">
+                <span class="overview-label">education</span>
+                <strong>BINUS University · 2025–2030</strong>
+              </div>
+              <div class="overview-item">
+                <span class="overview-label">focus</span>
+                <strong>Front-End / Software Engineering</strong>
+              </div>
+              <div class="overview-item">
+                <span class="overview-label">location</span>
+                <strong>West Jakarta, Indonesia</strong>
+              </div>
+              <div class="overview-item">
+                <span class="overview-label">languages</span>
+                <strong>Indonesian · English</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-content reveal reveal-delay">
+            <div class="profile-photo-wrap">
+              <img class="profile-photo" src="assets/fico-profile.png" alt="Federico Justian Wijono">
+              <div class="photo-label">Fico / 2026</div>
+            </div>
+
+            <div class="about-copy">
+              <p>
+                I'm <strong>Federico Justian Wijono</strong>, usually called <strong>Fico</strong>.
+                I'm currently studying in the <strong>Master of Computer Science (Master Track)</strong>
+                program at <strong>BINUS University</strong>, with a current GPA of <strong>3.20 / 4.00</strong>.
+              </p>
+              <p>
+                My practical focus is web development — especially <strong>JavaScript, React, Vue.js,
+                and Tailwind CSS</strong> — while strengthening my software engineering fundamentals
+                through data structures, algorithms, databases, and version control.
+              </p>
+              <p>
+                Outside coding, I've worked in technical event environments across multimedia,
+                sound, and stage lighting. That experience taught me to stay reliable, troubleshoot
+                under pressure, and work as part of a team.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section section-dark" id="skills">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-number">02</span>
+          <div><p class="eyebrow">my toolbox</p><h2>Skills & technologies</h2></div>
+        </div>
+
+        <div class="skills-grid" data-collection="skills">
+          <article class="skill-card reveal" data-entity="skill" data-id="languages"><div class="skill-icon">&lt;/&gt;</div><h3>Languages</h3><p>Programming and markup languages I currently work with.</p><div class="tags"><span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>C / C++</span><span>Python</span><span>SQL</span></div></article>
+          <article class="skill-card reveal reveal-delay" data-entity="skill" data-id="frameworks"><div class="skill-icon">◈</div><h3>Frameworks & libraries</h3><p>Tools for building structured, responsive web interfaces.</p><div class="tags"><span>React</span><span>Vue.js</span><span>Tailwind CSS</span><span>Bootstrap</span></div></article>
+          <article class="skill-card reveal" data-entity="skill" data-id="tools"><div class="skill-icon">⌘</div><h3>Developer tools</h3><p>Tools and practices used throughout my development workflow.</p><div class="tags"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Chrome DevTools</span></div></article>
+          <article class="skill-card reveal reveal-delay" data-entity="skill" data-id="concepts"><div class="skill-icon">01</div><h3>Core concepts</h3><p>Foundational computer science and web development concepts.</p><div class="tags"><span>Data Structures</span><span>Algorithms</span><span>Database Management</span><span>REST APIs</span></div></article>
+        </div>
+      </div>
+    </section>
+
+<!-- EXPERIENCE -->
+    <section class="section" id="experience">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-number">03</span>
+          <div><p class="eyebrow">what I've done</p><h2>Experience</h2></div>
+        </div>
+
+        <div class="experience-rows">
+          <div class="exp-row reveal">
+            <article class="timeline-item" data-entity="experience" data-id="volleyball-club">
+              <div class="timeline-date">JAN 2026<br>— PRESENT</div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <span class="experience-type">organization</span>
+                <h3>Volleyball Club Training Committee Member</h3>
+                <p class="organization">BINUS University</p>
+                <p>Coordinate weekly training schedules, member attendance, and club activities while working within a team environment.</p>
+              </div>
+            </article>
+            <div class="profile-photo-wrap experience-photocard">
+              <img class="profile-photo" src="assets/exp-photo_4.png" alt="Experience 4">
+              <div class="photo-label">Volleyball / 2026</div>
+            </div>
+          </div>
+
+          <div class="exp-row reveal reveal-delay">
+            <article class="timeline-item" data-entity="experience" data-id="multimedia-lighting">
+              <div class="timeline-date">DEC 2023<br>— JAN 2026</div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <span class="experience-type">volunteer</span>
+                <h3>Multimedia & Lighting Team Member</h3>
+                <p class="organization">Rock Kuta Indonesian Bethel Church</p>
+                <p>Supported multimedia, sound, and stage-lighting operations for regular services and major events including Christmas and Easter. Completed stage-lighting training and provided technical troubleshooting for computers, software, and equipment.</p>
+              </div>
+            </article>
+            <div class="profile-photo-wrap experience-photocard">
+              <img class="profile-photo" src="assets/exp-photo_3.png" alt="Experience 3">
+              <div class="photo-label">Multimedia / 2024-2026</div>
+            </div>
+          </div>
+
+          <div class="exp-row reveal">
+            <article class="timeline-item" data-entity="experience" data-id="osis-coordinator">
+              <div class="timeline-date">JAN 2024<br>— DEC 2024</div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <span class="experience-type">leadership</span>
+                <h3>OSIS Division IX Coordinator</h3>
+                <p class="organization">SMA Jembatan Budaya</p>
+                <p>Led a four-member team and coordinated event teams of 7–9 people. Supported major school events including the school's first graduation livestream, JB Idol, and charity activities.</p>
+              </div>
+            </article>
+            <div class="profile-photo-wrap experience-photocard">
+              <img class="profile-photo" src="assets/exp-photo_2.png" alt="Experience 2">
+              <div class="photo-label">OSIS Coordinator / 2024</div>
+            </div>
+          </div>
+
+          <div class="exp-row reveal reveal-delay">
+            <article class="timeline-item" data-entity="experience" data-id="osis-member">
+              <div class="timeline-date">JAN 2023<br>— DEC 2023</div>
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <span class="experience-type">organization</span>
+                <h3>OSIS Division IX Member</h3>
+                <p class="organization">SMA Jembatan Budaya</p>
+                <p>Contributed to JunESPORT 2023, the school's first esports event, including livestream production and event preparation. Also supported JEDA, JB Idol, and the first P5 project.</p>
+              </div>
+            </article>
+            <div class="profile-photo-wrap experience-photocard">
+              <img class="profile-photo" src="assets/exp-photo_1.png" alt="Experience 1">
+              <div class="photo-label">OSIS Member / 2023</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section section-dark" id="projects">
+      <div class="container">
+        <div class="section-heading section-heading--projects reveal">
+          <span class="section-number">04</span>
+          <div><p class="eyebrow">selected work</p><h2>Projects</h2></div>
+        </div>
+
+        <div class="projects-list" data-collection="projects">
+          <article class="project-card reveal" data-entity="project" data-id="percava">
+            <div class="project-index">01</div>
+            <div class="project-main">
+              <div class="project-top"><span class="project-type">web development · 2026</span></div>
+              <h3>Percava Website</h3>
+              <p>Responsive website developed and deployed using HTML, CSS, and JavaScript, with page layouts and front-end interactions built from scratch.</p>
+              <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Vercel</span></div>
+            </div>
+            <a class="project-action" href="https://percava.vercel.app" target="_blank" rel="noopener noreferrer">View live <span>↗</span></a>
+          </article>
+
+          <article class="project-card reveal reveal-delay" data-entity="project" data-id="attendance-tracking">
+            <div class="project-index">02</div>
+            <div class="project-main">
+              <div class="project-top"><span class="project-type">automation</span></div>
+              <h3>Attendance Tracking System</h3>
+              <p>Automated workflow connecting Google Forms responses to Google Sheets, with color-coded statuses for present, absent, excused, and sick leave.</p>
+              <div class="project-tags"><span>Google Forms</span><span>Google Sheets</span><span>Automation</span></div>
+            </div>
+            <a class="project-action" href="mailto:federicojwwork@gmail.com?subject=Attendance%20Tracking%20System">Ask about <span>↗</span></a>
+          </article>
+
+          <article class="project-card reveal" data-entity="project" data-id="developer-portfolio">
+            <div class="project-index">03</div>
+            <div class="project-main">
+              <div class="project-top"><span class="project-type">web development · 2026</span></div>
+              <h3>Developer Portfolio</h3>
+              <p>Personal portfolio website built to present my projects, technical skills, education, and experience through a responsive developer-focused interface.</p>
+              <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            </div>
+            <a class="project-action" href="#hero">View site <span>↗</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION / CREDENTIALS -->
+    <section class="section" id="education">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-number">05</span>
+          <div><p class="eyebrow">academic background</p><h2>Education</h2></div>
+        </div>
+
+        <div class="credentials" data-collection="education">
+          <article class="credential reveal" data-entity="education" data-id="binus-master-track"><div class="credential-main"><span class="credential-icon">🎓</span><div><h3>Master of Computer Science (Master Track)</h3><p>BINUS University · Computer Science</p><small>Current GPA: 3.20 / 4.00 · Expected graduation: 2030</small></div></div><span class="credential-date">2025 — 2030</span></article>
+          <article class="credential reveal" data-entity="education" data-id="sma-jembatan-budaya"><div class="credential-main"><span class="credential-icon">▣</span><div><h3>Science Major (MIPA)</h3><p>SMA Jembatan Budaya · Bali</p></div></div><span class="credential-date">2022 — 2025</span></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDENTIALS -->
+    <section class="section section-dark" id="credentials">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-number">06</span>
+          <div><p class="eyebrow">certifications & learning</p><h2>Credentials</h2></div>
+        </div>
+
+        <div class="credentials">
+          <!-- CREDENTIAL TEMPLATE: duplicate this card for each certificate. -->
+          <article class="credential credential--certificate reveal" data-entity="credential" data-id="nvidia-deep-learning">
+            <div class="credential-main">
+              <span class="credential-icon" aria-hidden="true">◫</span>
+              <div>
+                <h3>Fundamentals of Deep Learning</h3>
+                <p>NVIDIA</p>
+                <small>Certificate of Competency · Issued October 19, 2025</small>
+              </div>
+            </div>
+            <div class="credential-side">
+              <span class="credential-date">OCT 2025</span>
+              <a class="credential-button" href="assets/E-Sertif_Nvidia-Fundamental_DL.pdf" target="_blank" rel="noopener noreferrer">View certificate <span>↗</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="contact-card reveal">
+          <div class="contact-copy"><p class="eyebrow">07 / contact</p><h2>Let's build something <span class="gradient-text">useful.</span></h2><p>I'm open to Front-End Developer and Software Engineer internship opportunities. If you'd like to talk about a role, project, or collaboration, feel free to reach out.</p></div>
+          <div class="contact-actions">
+            <a class="contact-row" href="mailto:federicojwwork@gmail.com">
+              <span class="contact-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5h18v13H3zM3 6l9 6.5L21 6"/></svg>email</span>
+              <span>federicojwwork@gmail.com ↗</span>
+            </a>
+            <a class="contact-row" href="https://github.com/federicojw" target="_blank" rel="noopener noreferrer">
+              <span class="contact-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.3 11.3 0 0 0-3.57 22c.57.1.78-.25.78-.55v-2.1c-3.18.69-3.85-1.54-3.85-1.54-.52-1.34-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.09 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.24 3.34.95.1-.74.4-1.24.73-1.53-2.54-.29-5.21-1.27-5.21-5.63 0-1.24.44-2.27 1.17-3.07-.12-.29-.51-1.45.12-3.02 0 0 .96-.31 3.14 1.18a10.9 10.9 0 0 1 5.72-.01c2.19-1.48 3.15-1.17 3.15-1.17.62 1.57.23 2.73.11 3.01.73.8 1.18 1.83 1.18 3.08 0 4.37-2.68 5.35-5.23 5.63.41.35.77 1.05.77 2.12v3.14c0 .31.21.66.79.55A11.3 11.3 0 0 0 12 .7Z"/></svg>github</span>
+              <span>github.com/federicojw ↗</span>
+            </a>
+            <a class="contact-row" href="https://linkedin.com/in/federicojw" target="_blank" rel="noopener noreferrer">
+              <span class="contact-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 3.6a2.1 2.1 0 1 1-4.2 0 2.1 2.1 0 0 1 4.2 0ZM1.2 8h4v13.8h-4V8Zm6.4 0h3.8v1.88h.05c.53-1 1.82-2.1 3.76-2.1 4 0 4.74 2.63 4.74 6.05v7.97h-4v-7.18c0-1.72-.03-3.93-2.4-3.93-2.4 0-2.77 1.87-2.77 3.8v7.31h-4V8Z"/></svg>linkedin</span>
+              <span>linkedin.com/in/federicojw ↗</span>
+            </a>
+            <a class="contact-row" href="tel:+628139676778">
+              <span class="contact-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.1 2.8 9.8 2l2 4.9-2.5 1.7a15.3 15.3 0 0 0 6.1 6.1l1.7-2.5 4.9 2-.8 2.7c-.35 1.18-1.47 1.95-2.7 1.85C10.55 17.85 6.15 13.45 5.15 5.5 5 4.27 5.92 3.15 7.1 2.8Z"/></svg>phone</span>
+              <span>+62 813-9676-778 ↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© 2026 Federico Justian Wijono</span>
+    <a href="#top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">back to top ↑</a>
+  </div>
+</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
