@@ -618,7 +618,8 @@ body.cursor-active .cursor-glow {
   height: 15px;
   background: var(--cyan);
   vertical-align: middle;
-  animation: blink 1s steps(2, start) infinite;
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pureCaretBlink 1s steps(1, start) infinite !important;
 }
 
 .window-status {
