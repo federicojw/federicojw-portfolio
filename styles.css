@@ -1329,8 +1329,8 @@ body.cursor-active .cursor-glow {
 
 /* Contact */
 .contact-section {
-  padding-top: 80px;
-  padding-bottom: 110px;
+  padding-top: 40px;
+  padding-bottom: 80px;
 }
 
 .contact-card {
