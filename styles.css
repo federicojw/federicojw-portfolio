@@ -1967,3 +1967,28 @@ body.cursor-active .cursor-glow {
     left: 7px !important;
   }
 }
+
+/* --- GLOBAL SVG ARROW ICONS --- */
+.icon-arrow {
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+
+/* Hover animation untuk panah miring */
+a:hover .icon-arrow,
+button:hover .icon-arrow {
+  transform: translate(2px, -2px);
+}
+
+/* Hover animation khusus back to top (panah ke atas) */
+.back-to-top-link:hover .icon-arrow {
+  transform: translateY(-3px);
+}
