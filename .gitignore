@@ -1,0 +1,2 @@
+dashboard/uploads/*
+!dashboard/uploads/.gitkeep
