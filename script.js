@@ -3,18 +3,40 @@ const siteNav = document.getElementById("siteNav");
 const navLinks = [...document.querySelectorAll(".nav-link")];
 const sections = [...document.querySelectorAll("main section[id]")];
 const revealItems = [...document.querySelectorAll(".reveal")];
-const dnaCanvas = document.getElementById("dnaCanvas");
 const roleRotator = document.getElementById("roleRotator");
 const cursorGlow = document.querySelector(".cursor-glow");
-const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.documentElement.classList.add('js-loaded');
 
 const HERO_ROLES = [
   "Software Engineer",
   "Front-End Developer",
   "Web Developer",
-  "SQL & Database Learner"
+  "SQL & Database Learner",
+  "UI/UX Designer",
+  "JavaScript Developer",
+  "PHP & Laravel Enthusiast",
+  "C Programmer",
+  "Full-Stack Developer",
+  "Systems Explorer"
 ];
+
+const IT_ROLE_ITEMS = [
+  { text: "SOFTWARE ENGINEER", icon: "🛠️" },
+  { text: "FRONT-END DEVELOPER", icon: "🎨" },
+  { text: "WEB DEVELOPER", icon: "🌐" },
+  { text: "SQL & DATABASE LEARNER", icon: "🗄️" },
+  { text: "JAVASCRIPT DEVELOPER", icon: "⚡" },
+  { text: "C PROGRAMMING ENTHUSIAST", icon: "⌨️" },
+  { text: "UI/UX DESIGNER", icon: "✨" },
+  { text: "FULL-STACK DEVELOPER", icon: "💻" }
+];
+
+const GREETINGS = [
+  "Halo", "Hello", "你好", "こんにちは", "안녕하세요", "Bonjour", "Hola", "Ciao", "Guten Tag", "Servus", "Håfa adai"
+];
+
+let lastItIndex = -1;
+let lastGreetingIndex = -1;
 
 // --- MOBILE MENU ---
 function closeMenu() {
@@ -76,7 +98,7 @@ window.addEventListener("resize", () => {
   updateActiveNav();
 });
 
-// --- SCROLL REVEAL (PAKSA AKTIF) ---
+// --- SCROLL REVEAL ---
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -89,10 +111,9 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealItems.forEach((item) => revealObserver.observe(item));
 
-// --- ROLE ROTATOR ---
+// --- ROLE ROTATOR (HERO TITLE) ---
 function startRoleRotator() {
   if (!roleRotator) return;
-
   let roleIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
@@ -124,8 +145,66 @@ function startRoleRotator() {
 
   setTimeout(typeAutomatically, 800);
 }
-
 startRoleRotator();
+
+// --- HEADER AVAILABLE ROTATOR (1500ms) ---
+function startAvailableRotator() {
+  const iconEl = document.getElementById("rotatorIcon");
+  const textEl = document.getElementById("rotatorRoleText");
+  if (!iconEl || !textEl) return;
+
+  setInterval(() => {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * IT_ROLE_ITEMS.length);
+    } while (newIndex === lastItIndex && IT_ROLE_ITEMS.length > 1);
+
+    lastItIndex = newIndex;
+    const selected = IT_ROLE_ITEMS[newIndex];
+
+    iconEl.style.opacity = "0";
+    iconEl.style.transform = "translateY(-6px)";
+    textEl.style.opacity = "0";
+    textEl.style.transform = "translateY(-6px)";
+
+    setTimeout(() => {
+      iconEl.textContent = selected.icon;
+      textEl.textContent = selected.text;
+
+      iconEl.style.opacity = "1";
+      iconEl.style.transform = "translateY(0)";
+      textEl.style.opacity = "1";
+      textEl.style.transform = "translateY(0)";
+    }, 250);
+  }, 1500); 
+}
+startAvailableRotator();
+
+// --- GREETING ROTATOR (2000ms) ---
+function startGreetingRotator() {
+  const greetingEl = document.getElementById("greetingRotator");
+  if (!greetingEl) return;
+
+  setInterval(() => {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * GREETINGS.length);
+    } while (newIndex === lastGreetingIndex && GREETINGS.length > 1);
+
+    lastGreetingIndex = newIndex;
+    const selectedGreeting = GREETINGS[newIndex];
+
+    greetingEl.style.opacity = "0";
+    greetingEl.style.transform = "translateY(-6px)";
+
+    setTimeout(() => {
+      greetingEl.textContent = selectedGreeting;
+      greetingEl.style.opacity = "1";
+      greetingEl.style.transform = "translateY(0)";
+    }, 250);
+  }, 2000); 
+}
+startGreetingRotator();
 
 // --- CURSOR GLOW ---
 if (cursorGlow) {
@@ -151,8 +230,7 @@ if (cursorGlow) {
   requestAnimationFrame(renderGlow);
 }
 
-
-// --- SCROLL PROGRESS BAR (SUPER SMOOTH LERP) ---
+// --- SCROLL PROGRESS BAR ---
 const scrollProgress = document.getElementById("scrollProgress");
 let targetScroll = 0;
 let currentScroll = 0;
@@ -164,7 +242,6 @@ function renderProgressBar() {
     const maxScroll = docHeight - winHeight;
 
     targetScroll = window.scrollY;
-
     currentScroll += (targetScroll - currentScroll) * 0.15;
 
     let scrollPercent = currentScroll / maxScroll || 0;
@@ -174,5 +251,4 @@ function renderProgressBar() {
   }
   requestAnimationFrame(renderProgressBar);
 }
-
 requestAnimationFrame(renderProgressBar);

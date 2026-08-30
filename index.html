@@ -24,10 +24,19 @@
 
   <header class="site-header" id="top">
     <div class="container nav-wrap">
-      <a class="brand" href="https://www.federicojw.my.id/" aria-label="Federico Justian Wijono home">
-        <span class="brand-mark">&lt;/&gt;</span>
-        <span>federicojw<span class="accent">.my.id</span></span>
-      </a>
+      <div class="brand-header-group">
+        <a class="brand" href="https://www.federicojw.my.id/" aria-label="Federico Justian Wijono home">
+          <span class="brand-mark">&lt;/&gt;</span>
+          <span>federicojw<span class="accent">.my.id</span></span>
+        </a>
+
+        <div class="header-role-box">
+          <div class="dynamic-role-box" id="headerRoleRotator">
+            <span class="rotator-icon" id="rotatorIcon">🛠️</span>
+            <span class="rotator-role-text" id="rotatorRoleText">SOFTWARE ENGINEER</span>
+          </div>
+        </div>
+      </div>
 
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="siteNav">
         <span></span><span></span><span></span>
@@ -44,7 +53,7 @@
         <a class="nav-link" href="#contact">CONTACT</a>
       </nav>
 
-      <a class="nav-cta" href="https://wa.me/6281239676778" target="_blank" rel="noopener noreferrer">
+      <a class="nav-cta enhanced-btn" href="https://wa.me/6281239676778" target="_blank" rel="noopener noreferrer">
         Contact me 
         <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
       </a>
@@ -59,9 +68,9 @@
           <p class="eyebrow"><span class="status-dot"></span> available for internship opportunities</p>
 
           <h1 class="hero-title">
-            Hi, I'm <span class="gradient-text">Fico</span>.
-            <br>
-            I'm a <span class="role-rotator-wrap"><span class="role-rotator" id="roleRotator" aria-live="polite">Software Engineer</span><span class="typing-caret" aria-hidden="true"></span></span>
+            <span class="greeting-word" id="greetingRotator">Hello</span>,<br>
+            I'm <span class="gradient-text">Fico</span>.
+            I'm a<span class="role-rotator-wrap"><span class="role-rotator" id="roleRotator" aria-live="polite">Software Engineer</span><span class="typing-caret" aria-hidden="true"></span></span>
             <br>
             <span class="code-underline">in the making.</span>
           </h1>
@@ -73,14 +82,25 @@
           </p>
 
           <div class="hero-actions">
-            <a class="button button-primary" href="#projects">
+            <a class="button button-primary enhanced-btn" href="#projects">
               View my work 
               <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
-            <a class="button button-secondary" href="assets/Federico_Justian_Wijono_CV.pdf" download>
-              Download CV 
-              <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-            </a>
+            
+            <div class="cv-social-group">
+              <a class="button button-secondary enhanced-btn" href="assets/Federico_Justian_Wijono_CV.pdf" download>
+                Download CV 
+                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+              </a>
+
+              <a class="social-quick-btn enhanced-btn" href="https://github.com/federicojw" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.24c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.33-1.77-1.33-1.77-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.45 11.45 0 0 1 6-.01c2.3-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.6-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
+              </a>
+
+              <a class="social-quick-btn enhanced-btn" href="https://linkedin.com/in/federicojw" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.1 3.5a2.1 2.1 0 1 1-4.2 0 2.1 2.1 0 0 1 4.2 0ZM1.1 8h4V22h-4V8Zm6.4 0h3.8v1.9h.05c.53-1 1.82-2.1 3.75-2.1 4 0 4.74 2.63 4.74 6.05V22h-4v-7.2c0-1.72-.03-3.93-2.4-3.93-2.4 0-2.77 1.87-2.77 3.8V22h-4V8Z"/></svg>
+              </a>
+            </div>
           </div>
 
           <div class="hero-links" aria-label="Social links">
@@ -209,10 +229,10 @@
         </div>
 
         <div class="skills-grid" data-collection="skills">
-          <article class="skill-card reveal" data-entity="skill" data-id="languages"><div class="skill-icon">&lt;/&gt;</div><h3>Languages</h3><p>Programming and markup languages I currently work with.</p><div class="tags"><span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>C / C++</span><span>Python</span><span>SQL</span></div></article>
-          <article class="skill-card reveal reveal-delay" data-entity="skill" data-id="frameworks"><div class="skill-icon">◈</div><h3>Frameworks & libraries</h3><p>Tools for building structured, responsive web interfaces.</p><div class="tags"><span>React</span><span>Vue.js</span><span>Tailwind CSS</span><span>Bootstrap</span></div></article>
-          <article class="skill-card reveal" data-entity="skill" data-id="tools"><div class="skill-icon">⌘</div><h3>Developer tools</h3><p>Tools and practices used throughout my development workflow.</p><div class="tags"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Chrome DevTools</span></div></article>
-          <article class="skill-card reveal reveal-delay" data-entity="skill" data-id="concepts"><div class="skill-icon">01</div><h3>Core concepts</h3><p>Foundational computer science and web development concepts.</p><div class="tags"><span>Data Structures</span><span>Algorithms</span><span>Database Management</span><span>REST APIs</span></div></article>
+          <article class="skill-card reveal" data-entity="skill" data-id="frontend"><div class="skill-icon">&lt;/&gt;</div><h3>Frontend</h3><p>Tools for building structured, responsive user interfaces.</p><div class="tags"><span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>React</span><span>Vue.js</span><span>Tailwind CSS</span><span>Bootstrap</span></div></article>
+          <article class="skill-card reveal reveal-delay" data-entity="skill" data-id="backend"><div class="skill-icon">⚙️</div><h3>Backend & Database</h3><p>Server-side programming languages and database tools.</p><div class="tags"><span>PHP</span><span>C / C++</span><span>Python</span><span>SQL</span><span>Supabase</span></div></article>
+          <article class="skill-card reveal" data-entity="skill" data-id="tools"><div class="skill-icon">⌘</div><h3>Tools & Deployment</h3><p>Version control, developer tools, and hosting workflow.</p><div class="tags"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Chrome DevTools</span><span>Deployment</span></div></article>
+          <article class="skill-card reveal reveal-delay" data-entity="skill" data-id="concepts"><div class="skill-icon">01</div><h3>Core concepts</h3><p>Foundational computer science and software principles.</p><div class="tags"><span>Data Structures</span><span>Algorithms</span><span>Database Management</span><span>REST APIs</span></div></article>
         </div>
       </div>
     </section>
@@ -319,7 +339,7 @@
                 <span>Vercel</span>
               </div>
             </div>
-            <a class="project-action" href="https://percava.vercel.app" target="_blank" rel="noopener noreferrer">
+            <a class="project-action enhanced-btn" href="https://percava.vercel.app" target="_blank" rel="noopener noreferrer">
               View live 
               <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
@@ -337,7 +357,7 @@
                 <span>Automation</span>
               </div>
             </div>
-            <a class="project-action" href="https://wa.me/6281239676778" target="_blank" rel="noopener noreferrer">
+            <a class="project-action enhanced-btn" href="https://wa.me/6281239676778" target="_blank" rel="noopener noreferrer">
               Ask about 
               <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
@@ -359,7 +379,7 @@
                 <span>Responsive</span>
               </div>
             </div>
-            <a class="project-action" href="https://federicojw.my.id/">
+            <a class="project-action enhanced-btn" href="https://federicojw.my.id/">
               View site 
               <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
@@ -403,7 +423,7 @@
             </div>
             <div class="credential-side">
               <span class="credential-date">OCT 2025</span>
-              <a class="credential-button" href="assets/E-Sertif_Nvidia-Fundamental_DL.pdf" target="_blank" rel="noopener noreferrer">
+              <a class="credential-button enhanced-btn" href="assets/E-Sertif_Nvidia-Fundamental_DL.pdf" target="_blank" rel="noopener noreferrer">
                 View certificate 
                 <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
               </a>
