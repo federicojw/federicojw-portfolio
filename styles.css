@@ -1898,20 +1898,316 @@ button:hover .icon-arrow {
 .code-window,
 .about-terminal,
 .about-overview {
-  /* Animasi terang-redup bolak-balik (alternate) selama 2 detik */
   animation: breathingGlow 2s infinite alternate ease-in-out !important;
-  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  /* Transisi diperhalus untuk semua properti (transform, box-shadow, border-color) */
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.6s ease-in-out,
+              border-color 0.4s ease-in-out !important;
   will-change: transform, box-shadow, border-color;
 }
 
-/* Efek tilt/zoom dan glow maksimal saat di-hover */
 .code-window:hover,
 .about-terminal:hover,
 .about-overview:hover {
   transform: translateY(-6px) rotate(1deg) scale(1.02) !important;
-  animation-play-state: paused !important; /* Hentikan sementara animasi kedip saat ditunjuk */
   border-color: var(--cyan) !important;
-  box-shadow: 0 15px 45px rgba(34, 211, 238, 0.35), 
-              0 20px 80px rgba(59, 130, 246, 0.25), 
+  box-shadow: 0 20px 50px rgba(34, 211, 238, 0.4), 
+              0 25px 90px rgba(59, 130, 246, 0.3), 
               var(--shadow) !important;
+}
+
+/* --- SEQUENTIAL CINEMATIC INTRO & ENTRANCE ANIMATION --- */
+
+/* 1. Layar Intro awal */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #070b10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
+}
+
+/* --- CINEMATIC OUTRO & HERO ENTRANCE EFFECT --- */
+
+/* Efek Outro saat Intro ditutup (melayang ke atas sambil memudar) */
+.intro-overlay.fade-out {
+  opacity: 0;
+  transform: translateY(-20px) scale(1.02);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.7s ease;
+}
+
+.intro-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.intro-code-tag {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  color: var(--cyan);
+  padding: 10px 14px;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 10px;
+  background: rgba(34, 211, 238, 0.05);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+}
+
+.intro-title {
+  font-family: var(--mono);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.intro-subtitle {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.intro-loader {
+  width: 160px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.intro-loader-bar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan-bright), var(--blue));
+  transform: translateX(-100%);
+  animation: loadProgress 2.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes loadProgress {
+  0% { transform: translateX(-100%); }
+  60% { transform: translateX(-20%); }
+  100% { transform: translateX(0); }
+}
+
+/* 2. Header Slide-Down (Hanya jalan setelah kelas .intro-done aktif) */
+.site-header {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.intro-done .site-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3. Konten Utama Fade-In & Slide-Up Berurutan */
+.js-loaded .reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.intro-done .js-loaded .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- CONTENT ENTRANCE ANIMATION AFTER INTRO --- */
+/* Saat halaman dimuat dan kelas js-loaded aktif, elemen dengan kelas reveal akan bergeser naik dengan mulus */
+.js-loaded .reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js-loaded .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- WHOLE HOMEPAGE (HERO GRID) ENTRANCE EFFECT --- */
+.hero-grid {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.intro-done .hero-grid {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- LOCK SCROLL DURING INTRO --- */
+body:not(.intro-done) {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+/* Durasi bar loading disesuaikan jadi 2 detik */
+.intro-loader-bar {
+  animation: loadProgress 2s cubic-bezier(0.65, 0, 0.35, 1) forwards !important;
+}
+
+/* --- INTRO PERCENTAGE TEXT --- */
+.intro-percent {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+}
+
+/* --- TERMINAL BLOCK LOADER STYLE --- */
+.terminal-loader-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  margin-top: 12px;
+  background: rgba(10, 15, 22, 0.8);
+  padding: 8px 14px;
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
+}
+
+#terminalBar {
+  color: var(--cyan);
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+#loaderPercent {
+  color: var(--cyan-bright);
+  min-width: 38px;
+  text-align: right;
+}
+
+/* --- APPLY BREATHING GLOW TO SKILL CARDS --- */
+.skills-grid .skill-card {
+  animation: breathingGlow 2s infinite alternate ease-in-out !important;
+  will-change: transform, box-shadow, border-color;
+}
+
+/* Mempertahankan dan menyesuaikan efek hover tilt/zoom saat kursor diarahkan ke skill card */
+.skills-grid .skill-card:hover {
+  transform: translateY(-10px) rotate(1deg) scale(1.02) !important;
+  border-color: var(--cyan) !important;
+  background: var(--panel-hover) !important;
+  box-shadow: 0 16px 40px rgba(34, 211, 238, 0.25) !important;
+}
+
+/* --- WAVE BREATHING GLOW (STAGGERED FROM LEFT TO RIGHT) --- */
+.skills-grid .skill-card:nth-child(1) {
+  animation-delay: 0s !important;
+}
+
+.skills-grid .skill-card:nth-child(2) {
+  animation-delay: 0.4s !important;
+}
+
+.skills-grid .skill-card:nth-child(3) {
+  animation-delay: 0.8s !important;
+}
+
+.skills-grid .skill-card:nth-child(4) {
+  animation-delay: 1.2s !important;
+}
+
+/* --- APPLY BREATHING GLOW & WAVE EFFECT TO PROJECT CARDS --- */
+.projects-list .project-card {
+  animation: breathingGlow 2s infinite alternate ease-in-out !important;
+  will-change: transform, box-shadow, border-color;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
+              border-color 0.35s ease, 
+              box-shadow 0.35s ease !important;
+}
+
+/* Efek gelombang mengalir dari kiri ke kanan untuk projects */
+.projects-list .project-card:nth-child(1) {
+  animation-delay: 0s !important;
+}
+
+.projects-list .project-card:nth-child(2) {
+  animation-delay: 0.4s !important;
+}
+
+.projects-list .project-card:nth-child(3) {
+  animation-delay: 0.8s !important;
+}
+
+.projects-list .project-card:nth-child(4) {
+  animation-delay: 1.2s !important;
+}
+
+/* --- PROJECT CARD ZOOM HOVER EFFECT (TANPA ROTATE) --- */
+.projects-list .project-card:hover {
+  transform: translateY(-8px) scale(1.03) !important; /* Murni naik dan zoom ke tengah */
+  border-color: rgba(34, 211, 238, 0.8) !important;
+  box-shadow: 0 18px 45px rgba(34, 211, 238, 0.3) !important;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px) scale(1.01) !important;
+  animation-play-state: paused !important;
+  border-color: rgba(34, 211, 238, 0.6) !important;
+  box-shadow: 0 20px 50px rgba(34, 211, 238, 0.25), var(--shadow) !important;
+}
+
+/* --- BORDER BEAM / CAHAYA MUTER UNTUK CONTACT CARD --- */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.contact-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* Ketebalan garis border */
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 80%,
+    var(--blue) 92%,
+    var(--cyan-bright) 100%
+  );
+  -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  animation: rotateBorderBeam 3.5s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes rotateBorderBeam {
+  to {
+    --border-angle: 360deg;
+  }
 }

@@ -241,3 +241,48 @@ function renderProgressBar() {
   requestAnimationFrame(renderProgressBar);
 }
 requestAnimationFrame(renderProgressBar);
+
+// --- TERMINAL PROGRESS BAR SCRIPT (0-100% IN 2 SECONDS) ---
+window.addEventListener("load", () => {
+  const introOverlay = document.getElementById("introOverlay");
+  const percentEl = document.getElementById("loaderPercent");
+  const terminalBarEl = document.getElementById("terminalBar");
+  
+  let currentPercent = 0;
+  const duration = 1000; // Total duration in milliseconds
+  const intervalTime = 20; 
+  const totalBlocks = 20; // Jumlah kotak/karakter bar
+  const step = 100 / (duration / intervalTime);
+
+  const counterInterval = setInterval(() => {
+    currentPercent += step;
+    if (currentPercent >= 100) {
+      currentPercent = 100;
+      clearInterval(counterInterval);
+    }
+
+    const percentage = Math.floor(currentPercent);
+    if (percentEl) {
+      percentEl.textContent = `${percentage}%`;
+    }
+
+    // Menghitung jumlah blok kotak yang terisi (karakter '█') dan kosong ('-')
+    const filledBlocks = Math.round((percentage / 100) * totalBlocks);
+    const emptyBlocks = totalBlocks - filledBlocks;
+    if (terminalBarEl) {
+      terminalBarEl.textContent = `[${'█'.repeat(filledBlocks)}${'-'.repeat(emptyBlocks)}]`;
+    }
+  }, intervalTime);
+
+  // Setelah 2 detik selesai, jalankan outro memudar dan buka halaman utama
+  setTimeout(() => {
+    if (introOverlay) {
+      introOverlay.classList.add("fade-out");
+    }
+    
+    setTimeout(() => {
+      document.body.classList.add("intro-done");
+    }, 500); 
+    
+  }, duration); 
+});
