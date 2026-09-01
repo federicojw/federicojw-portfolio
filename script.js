@@ -53,39 +53,49 @@ function updateNavIndicator() {
 }
 
 function updateActiveNav() {
+  // 1. Jika TIDAK ADA section dengan ID (seperti di halaman detail project), matikan indikator active
+  if (!sections || sections.length === 0) {
+    navLinks.forEach((link) => link.classList.remove("active"));
+    return;
+  }
+
   const headerHeight = parseFloat(
     getComputedStyle(document.documentElement).getPropertyValue("--header")
   ) || 74;
-  const marker = window.scrollY + headerHeight + Math.min(window.innerHeight * 0.28, 220);
-  let current = sections[0]?.id || "hero";
 
-  sections.forEach((section) => {
-    if (section.offsetTop <= marker) current = section.id;
-  });
+  let current = "";
 
-  if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8) {
-    current = sections.at(-1)?.id || current;
+  // 2. Hanya hitung section yang aktif jika posisi scroll > 10px
+  if (window.scrollY > 10) {
+    const marker = window.scrollY + headerHeight + Math.min(window.innerHeight * 0.28, 220);
+
+    sections.forEach((section) => {
+      if (section.offsetTop <= marker) current = section.id;
+    });
+
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 15) {
+      current = sections.at(-1)?.id || current;
+    }
+  } else {
+    // Kalau posisi paling atas (scrollY <= 10), aktifkan section paling pertama jika ada
+    current = sections[0]?.id || "";
   }
 
+  // 3. Cocokkan tautan href dengan ID section yang ditemukan
   navLinks.forEach((link) => {
-    link.classList.toggle("active", link.getAttribute("href") === `#${current}`);
+    const href = link.getAttribute("href");
+    const isAnchor = href && href.startsWith("#");
+    
+    // Hanya nyalakan active jika section ID-nya benar-benar cocok
+    if (isAnchor && current) {
+      link.classList.toggle("active", href === `#${current}`);
+    } else {
+      link.classList.remove("active");
+    }
   });
+
   updateNavIndicator();
 }
-
-navLinks.forEach((link) => {
-  link.addEventListener("click", () => {
-    closeMenu();
-    window.setTimeout(updateActiveNav, 120);
-  });
-});
-
-window.addEventListener("scroll", updateActiveNav, { passive: true });
-window.addEventListener("load", updateActiveNav);
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 850) closeMenu();
-  updateActiveNav();
-});
 
 // --- SCROLL REVEAL ---
 const revealObserver = new IntersectionObserver((entries) => {
@@ -242,47 +252,184 @@ function renderProgressBar() {
 }
 requestAnimationFrame(renderProgressBar);
 
-// --- TERMINAL PROGRESS BAR SCRIPT (0-100% IN 2 SECONDS) ---
-window.addEventListener("load", () => {
+// --- TERMINAL PROGRESS BAR SCRIPT (INSTANT START & SMOOTH SHUTTER SPLIT) ---
+(function runIntroLoader() {
   const introOverlay = document.getElementById("introOverlay");
   const percentEl = document.getElementById("loaderPercent");
   const terminalBarEl = document.getElementById("terminalBar");
-  
+
+  if (!introOverlay) return;
+
   let currentPercent = 0;
-  const duration = 1000; // Total duration in milliseconds
-  const intervalTime = 20; 
-  const totalBlocks = 20; // Jumlah kotak/karakter bar
+  const duration = 800; // Durasi total loading (0.8 detik) - makin cepat!
+  const intervalTime = 16; 
+  const totalBlocks = 20; 
   const step = 100 / (duration / intervalTime);
 
   const counterInterval = setInterval(() => {
     currentPercent += step;
+    
     if (currentPercent >= 100) {
       currentPercent = 100;
       clearInterval(counterInterval);
+
+      // 1. Ubah warna teks ke hijau neon (Ready State)
+      introOverlay.classList.add("ready");
+
+      // 2. Langsung jalankan animasi kebelah pintu shutter & tampilkan konten
+      setTimeout(() => {
+        introOverlay.classList.add("fade-out");
+        document.body.classList.add("intro-done");
+      }, 150);
     }
 
     const percentage = Math.floor(currentPercent);
-    if (percentEl) {
-      percentEl.textContent = `${percentage}%`;
-    }
+    if (percentEl) percentEl.textContent = `${percentage}%`;
 
-    // Menghitung jumlah blok kotak yang terisi (karakter '█') dan kosong ('-')
     const filledBlocks = Math.round((percentage / 100) * totalBlocks);
     const emptyBlocks = totalBlocks - filledBlocks;
     if (terminalBarEl) {
       terminalBarEl.textContent = `[${'█'.repeat(filledBlocks)}${'-'.repeat(emptyBlocks)}]`;
     }
   }, intervalTime);
+})();
 
-  // Setelah 2 detik selesai, jalankan outro memudar dan buka halaman utama
-  setTimeout(() => {
-    if (introOverlay) {
-      introOverlay.classList.add("fade-out");
-    }
-    
-    setTimeout(() => {
-      document.body.classList.add("intro-done");
-    }, 500); 
-    
-  }, duration); 
+// --- INTERACTIVE STATUS GLOW REACTION ---
+const statusEyebrow = document.querySelector('.eyebrow');
+const statusDot = document.querySelector('.status-dot');
+
+if (statusEyebrow && statusDot) {
+  statusEyebrow.addEventListener('pointerenter', () => {
+    statusDot.style.animationDuration = '1.2s'; // Berdetak lebih cepat saat disentuh kursor
+  });
+  
+  statusEyebrow.addEventListener('pointerleave', () => {
+    statusDot.style.animationDuration = '2.4s'; // Kembali normal
+  });
+}
+
+// --- THEME TOGGLE (DARK / LIGHT MODE) ---
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+const savedTheme = localStorage.getItem("portfolio_theme");
+
+if (savedTheme === "light") {
+  document.body.classList.add("light-mode");
+}
+
+themeToggleBtn?.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+  const isLight = document.body.classList.contains("light-mode");
+  localStorage.setItem("portfolio_theme", isLight ? "light" : "dark");
 });
+
+// --- SHUTTER CLOSING TRANSITION UNTUK NAVIGASI INTERNAL ---
+document.addEventListener("click", (e) => {
+  const link = e.target.closest("a");
+  if (!link) return;
+
+  const href = link.getAttribute("href");
+  const isDownload = link.hasAttribute("download");
+  const isExternal = link.getAttribute("target") === "_blank" || (href && href.startsWith("http"));
+
+  // Abaikan scroll internal (#), mailto, tel, dan tombol download CV
+  if (!href || href.startsWith("#") || href.startsWith("javascript:") || href.startsWith("mailto:") || href.startsWith("tel:") || isDownload) {
+    return;
+  }
+
+  // JIKA LINK INTERNAL (View Detail, Back to Projects, Navigasi antarhalaman)
+  if (!isExternal) {
+    e.preventDefault(); 
+    const introOverlay = document.getElementById("introOverlay");
+
+    if (introOverlay) {
+      // 1. Reset angka ke 0% & hapus status ready hijau
+      const percentEl = document.getElementById("loaderPercent");
+      const terminalBarEl = document.getElementById("terminalBar");
+      if (percentEl) percentEl.textContent = "0%";
+      if (terminalBarEl) terminalBarEl.textContent = "[--------------------]";
+
+      // 2. Reset animasi halaman
+      document.body.classList.remove("intro-done");
+
+      // 3. Pasang efek tutup tirai & tampilkan elemen loader
+      introOverlay.classList.remove("fade-out", "ready");
+      introOverlay.classList.add("closing");
+
+      // 4. Pindah halaman tepat setelah tirai rapat (400ms)
+      setTimeout(() => {
+        window.location.href = href;
+      }, 400);
+    } else {
+      window.location.href = href;
+    }
+  }
+});
+
+// --- CUSTOM SMOOTH SCROLL (DESKTOP & MOBILE RESPONSIVE SPEED) ---
+function fastScrollTo(targetY, baseDuration = 350) {
+  const startPosition = window.scrollY;
+  const distance = targetY - startPosition;
+  const startTime = performance.now();
+
+  // Layar HP modern (<= 850px) memakai 500ms agar sangat smooth di layar 120Hz
+  const isMobile = window.innerWidth <= 850;
+  const duration = isMobile ? 500 : baseDuration; 
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animation(currentTime) {
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+    const easeProgress = easeOutCubic(progress);
+
+    window.scrollTo(0, startPosition + distance * easeProgress);
+
+    if (progress < 1) {
+      requestAnimationFrame(animation);
+    }
+  }
+  requestAnimationFrame(animation);
+}
+
+// 1. Event listener khusus Navigasi Header (Home, About, Skills, dll)
+navLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const href = link.getAttribute("href");
+
+    // Cek apakah link menuju ID lokal (#about, #projects, dll) di halaman ini
+    if (href && href.startsWith("#") && href.length > 1) {
+      const targetSection = document.querySelector(href);
+
+      if (targetSection) {
+        e.preventDefault(); // Tahan scroll kaku bawaan browser
+        closeMenu();       // Tutup menu mobile jika sedang terbuka
+
+        // Hitung posisi elemen dikurangi tinggi header
+        const headerHeight = parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue("--header")
+        ) || 74;
+
+        const targetY = Math.max(0, targetSection.offsetTop - headerHeight + 5);
+
+        // Jalankan scroll cepat (350ms)
+        fastScrollTo(targetY, 350);
+      }
+    }
+  });
+});
+
+// 2. Event listener khusus tombol Back to Top
+document.addEventListener("click", (e) => {
+  const backBtn = e.target.closest(".back-to-top-link");
+  if (!backBtn) return;
+
+  e.preventDefault();
+  fastScrollTo(0, 300); // Scroll cepat ke posisi paling atas (0px)
+});
+
+// --- JALANKAN ACTIVE NAV SAAT LOAD, SCROLL & RESIZE ---
+window.addEventListener("DOMContentLoaded", updateActiveNav);
+window.addEventListener("scroll", updateActiveNav, { passive: true });
+window.addEventListener("resize", updateNavIndicator);

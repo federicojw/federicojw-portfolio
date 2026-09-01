@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Project Detail | Federico Justian Wijono (Fico)">
+  <meta name="theme-color" content="#0b1118">
+  <title>Project Detail | Federico Justian Wijono</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/logo-web.svg">
+  <link rel="shortcut icon" href="assets/logo-web.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    @property --border-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @keyframes rotateBorderBeam {
+      to { --border-angle: 360deg; }
+    }
+    .media-card {
+      position: relative;
+      background: #0a0f16;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .media-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: conic-gradient(
+        from var(--border-angle),
+        transparent 80%,
+        var(--blue) 92%,
+        var(--cyan-bright) 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      animation: rotateBorderBeam 3.5s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    /* Lock scroll saat intro aktif */
+    body:not(.intro-done) {
+      overflow: hidden !important;
+      height: 100vh !important;
+    }
+    /* EFEK HOVER ZOOM MEMBESAR PADA CODE WINDOW & PROJECT INFO */
+    .code-window {
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                  box-shadow 0.3s ease, 
+                  border-color 0.3s ease !important;
+      will-change: transform, box-shadow;
+    }
+
+    .code-window:hover {
+      transform: scale(1.06) translateY(-4px) !important; 
+      border-color: var(--cyan) !important;
+      box-shadow: 0 18px 40px rgba(34, 211, 238, 0.35) !important;
+      animation-play-state: paused !important;
+    }
+
+    /* RESPONSIF KHUSUS MOBILE (Layar di bawah 768px) */
+    @media (max-width: 768px) {
+      .project-iframe-box {
+        aspect-ratio: 1 / 1 !important;
+        max-height: none !important;
+      }
+      .features-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- CREATIVE INTRO SPLASH SCREEN -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-content">
+      <span class="intro-code-tag">&lt;/&gt;</span>
+      <h1 class="intro-title">federicojw<span class="accent">.my.id</span></h1>
+      <p class="intro-subtitle">Loading Project Environment...</p>
+      <div class="terminal-loader-box">
+        <span id="terminalBar">[--------------------]</span>
+        <span id="loaderPercent">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-progress-bar" id="scrollProgress"></div>
+  <div class="page-glow page-glow--one"></div>
+  <div class="page-glow page-glow--two"></div>
+  <canvas class="dna-canvas" id="dnaCanvas" aria-hidden="true"></canvas>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <div class="brand-header-group">
+        <a class="brand" href="index.html" aria-label="Federico Justian Wijono home">
+          <span class="brand-mark">&lt;/&gt;</span>
+          <span>federicojw<span class="accent">.my.id</span></span>
+        </a>
+
+        <div class="header-role-box">
+          <div class="dynamic-role-box" id="headerRoleRotator">
+            <span class="rotator-icon" id="rotatorIcon">🛠️</span>
+            <span class="rotator-role-text" id="rotatorRoleText">SOFTWARE ENGINEER</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="siteNav" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html#hero">HOME</a>
+        <a class="nav-link" href="index.html#about">ABOUT</a>
+        <a class="nav-link" href="index.html#skills">SKILLS</a>
+        <a class="nav-link" href="index.html#experience">EXPERIENCE</a>
+        <a class="nav-link active" href="index.html#projects">PROJECTS</a>
+        <a class="nav-link" href="index.html#education">EDUCATION</a>
+        <a class="nav-link" href="index.html#credentials">CREDENTIALS</a>
+        <a class="nav-link" href="index.html#contact">CONTACT</a>
+      </nav>
+
+      <a class="nav-cta enhanced-btn" href="https://wa.me/6281239676778" target="_blank" rel="noopener noreferrer">
+        Contact me 
+        <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+      </a>
+
+      <!-- TOMBOL TOGGLE DARK / LIGHT MODE -->
+      <button class="theme-toggle-btn enhanced-btn" id="themeToggleBtn" aria-label="Toggle theme" title="Switch Theme">
+        <svg class="theme-icon moon-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-icon sun-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: calc(var(--header) + 30px); min-height: 80vh;">
+      <div class="container" style="max-width: 950px;">
+        <div class="reveal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-bottom: 25px;">
+          <a class="project-action enhanced-btn" href="index.html#projects" style="margin: 0; padding: 8px 12px;">
+            <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true" style="transform: rotate(180deg); margin-right: 6px;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            Back to Projects
+          </a>
+          <p class="eyebrow" style="margin: 0;"><span class="status-dot"></span> AUG 2026 - OCT 2026 &nbsp;•&nbsp; WEB DEVELOPMENT &nbsp;•&nbsp; FRONTEND</p>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 20px;">
+          <h1 class="hero-title" style="font-size: clamp(2.5rem, 4.5vw, 3.8rem); margin: 0; line-height: 1.1;">
+            Personal Portfolio Website <span class="gradient-text">Project</span>
+          </h1>
+        </div>
+
+        <div class="reveal project-tags" style="margin-top: 0; margin-bottom: 25px; gap: 10px;">
+          <span class="enhanced-btn" style="cursor: pointer;">HTML5</span>
+          <span class="enhanced-btn" style="cursor: pointer;">CSS3</span>
+          <span class="enhanced-btn" style="cursor: pointer;">JavaScript</span>
+          <span class="enhanced-btn" style="cursor: pointer;">Git</span>
+          <span class="enhanced-btn" style="cursor: pointer;">GitHub</span>
+          <span class="enhanced-btn" style="cursor: pointer;">Vercel</span>
+          <span class="enhanced-btn" style="cursor: pointer;">UI/UX</span>
+          <span class="enhanced-btn" style="cursor: pointer;">Responsive Design</span>
+        </div>
+
+        <div class="reveal" style="display: flex; gap: 12px; margin-bottom: 45px;">
+          <a class="button button-primary enhanced-btn" href="https://github.com/federicojw/federicojw-portfolio" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px;">
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.24c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.33-1.77-1.33-1.77-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.45 11.45 0 0 1 6-.01c2.3-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.6-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
+            View Code
+          </a>
+          <a class="button button-secondary enhanced-btn" href="index.html#hero">
+            View Site 
+            <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </a>
+        </div>
+
+        <div class="reveal reveal-delay" style="margin-bottom: 45px;">
+          <div class="media-card">
+            <div class="project-iframe-box" style="position: relative; width: 100%; aspect-ratio: 21 / 9; max-height: 420px; overflow: hidden; border-radius: inherit; z-index: 1;">
+              <iframe src="https://federicojw.my.id/" title="Project Live Overview" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: var(--text);">Project Overview</h2>
+          <p style="color: var(--text-soft); line-height: 1.8; font-size: 1.02rem;">
+            This personal portfolio website is engineered from scratch to serve as a high-performance, interactive digital CV and developer showcase. It highlights my core competencies as a Computer Science student and aspiring software engineer, featuring a custom terminal-inspired splash screen, dynamic role rotation, dual dark/light cyberpunk color themes, and a modular architecture optimized for seamless cross-platform accessibility.
+          </p>
+        </div>
+
+        <div class="reveal features-info-container">
+          <div class="key-features-box">
+            <h3 style="font-size: 1.25rem; margin-bottom: 12px; color: var(--cyan-bright);">Key Features Implemented</h3>
+            <ul style="color: var(--text-soft); padding-left: 18px; line-height: 1.8; font-size: 0.95rem;">
+              <li><strong>Responsive Design:</strong> Fluid layouts that adapt seamlessly across mobile devices, tablets, and desktop viewports.</li>
+              <li><strong>Dark Mode Theming:</strong> Built-in persistent Dark and Light mode engine utilizing CSS custom variables and automatic localStorage synchronization.</li>
+              <li><strong>Interactive Elements:</strong> Custom glowing cursor trackers, smooth mouse-tracking tilt effects, and real-time script-driven text rotators.</li>
+              <li><strong>Performance Optimized:</strong> Lightweight DOM manipulation, deferred script loading, and rapid Vercel edge deployment assets.</li>
+              <li><strong>Cinematic Splash Screen:</strong> Custom terminal boot loader simulation with dynamic progress bar feedback on initial load.</li>
+            </ul>
+          </div>
+
+          <div class="code-window project-info-mobile-box" style="padding: 24px; animation: breathingGlow 2s infinite alternate ease-in-out;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <div class="skill-icon" style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0; width: 36px; height: 36px;">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <h3 style="font-size: 1.05rem; color: var(--text); margin: 0;">Project Info</h3>
+            </div>
+            
+            <div class="project-info-details">
+              <div class="info-row">
+                <span style="color: var(--text-muted);">Category</span>
+                <span style="text-align: right;">Web Development / Portfolio</span>
+              </div>
+              <div class="info-row">
+                <span style="color: var(--text-muted);">Role</span>
+                <span style="text-align: right;">Creator & Frontend Developer</span>
+              </div>
+              <div class="info-row">
+                <span style="color: var(--text-muted);">Timeline</span>
+                <span style="text-align: right;">August 2026 - October 2026</span>
+              </div>
+              <div class="info-row no-border">
+                <span style="color: var(--text-muted);">Status</span>
+                <span style="color: var(--green); text-align: right;">Active / Deployed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 45px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: var(--text);">Technical Architecture</h2>
+          <p style="color: var(--text-soft); margin-bottom: 20px; line-height: 1.8;">
+            The project is built with a modern, modular technology structure:
+          </p>
+
+          <h3 style="font-size: 1.2rem; margin-bottom: 14px; color: var(--cyan-bright);">
+            1. Frontend Component Structure
+          </h3>
+          <p style="color: var(--text-soft); margin-bottom: 20px; line-height: 1.8;">
+            Modular, vanilla web stack separating structure, styling, and interactive behavior. Below is the core initialization and theme control structure:
+          </p>
+          
+          <div class="code-window" style="margin-bottom: 30px;">
+            <div class="window-top">
+              <div class="window-dots"><span></span><span></span><span></span></div>
+              <span class="window-file">script.js</span>
+              <span class="window-lang">JavaScript</span>
+            </div>
+            <div class="code-body">
+              <div class="code-line"><span class="line-number">01</span><span><span class="comment">// Theme Synchronization &amp; Toggle Architecture</span></span></div>
+              <div class="code-line"><span class="line-number">02</span><span><span class="keyword">const</span> <span class="variable">savedTheme</span> = localStorage.<span class="function">getItem</span>(<span class="string">"portfolio_theme"</span>);</span></div>
+              <div class="code-line"><span class="line-number">03</span><span><span class="keyword">if</span> (savedTheme === <span class="string">"light"</span>) &#123;</span></div>
+              <div class="code-line"><span class="line-number">04</span><span>&nbsp;&nbsp;document.body.classList.<span class="function">add</span>(<span class="string">"light-mode"</span>);</span></div>
+              <div class="code-line"><span class="line-number">05</span><span>&#125;</span></div>
+              <div class="code-line"><span class="line-number">06</span><span></span></div>
+              <div class="code-line"><span class="line-number">07</span><span><span class="keyword">const</span> <span class="variable">themeToggleBtn</span> = document.<span class="function">getElementById</span>(<span class="string">"themeToggleBtn"</span>);</span></div>
+              <div class="code-line"><span class="line-number">08</span><span>themeToggleBtn?.<span class="function">addEventListener</span>(<span class="string">"click"</span>, () =&gt; &#123;</span></div>
+              <div class="code-line"><span class="line-number">09</span><span>&nbsp;&nbsp;document.body.classList.<span class="function">toggle</span>(<span class="string">"light-mode"</span>);</span></div>
+              <div class="code-line"><span class="line-number">10</span><span>&nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">isLight</span> = document.body.classList.<span class="function">contains</span>(<span class="string">"light-mode"</span>);</span></div>
+              <div class="code-line"><span class="line-number">11</span><span>&nbsp;&nbsp;localStorage.<span class="function">setItem</span>(<span class="string">"portfolio_theme"</span>, isLight ? <span class="string">"light"</span> : <span class="string">"dark"</span>);</span></div>
+              <div class="code-line"><span class="line-number">12</span><span>&#125;);</span></div>
+              <div class="cursor-line"><span class="cursor"></span></div>
+            </div>
+            <div class="window-status">
+              <span>main</span><span>UTF-8</span><span>JavaScript</span><span>Ln 12, Col 3</span>
+            </div>
+          </div>
+
+          <h3 style="font-size: 1.2rem; margin-bottom: 14px; color: var(--cyan-bright);">
+            2. CSS Custom Properties Design System
+          </h3>
+          <p style="color: var(--text-soft); margin-bottom: 20px; line-height: 1.8;">
+            Centralized variable tokens for styling tokens, states, and smooth theme transitions:
+          </p>
+          
+          <div class="code-window">
+            <div class="window-top">
+              <div class="window-dots"><span></span><span></span><span></span></div>
+              <span class="window-file">styles.css</span>
+              <span class="window-lang">CSS</span>
+            </div>
+            <div class="code-body">
+              <div class="code-line"><span class="line-number">01</span><span><span class="keyword">body.light-mode</span> &#123;</span></div>
+              <div class="code-line"><span class="line-number">02</span><span>&nbsp;&nbsp;<span class="variable">--bg</span>: <span class="string">#f8fafc</span>;</span></div>
+              <div class="code-line"><span class="line-number">03</span><span>&nbsp;&nbsp;<span class="variable">--panel</span>: <span class="string">#ffffff</span>;</span></div>
+              <div class="code-line"><span class="line-number">04</span><span>&nbsp;&nbsp;<span class="variable">--text</span>: <span class="string">#0f172a</span>;</span></div>
+              <div class="code-line"><span class="line-number">05</span><span>&nbsp;&nbsp;<span class="variable">--text-soft</span>: <span class="string">#334155</span>;</span></div>
+              <div class="code-line"><span class="line-number">06</span><span>&nbsp;&nbsp;<span class="variable">--cyan</span>: <span class="string">#0284c7</span>;</span></div>
+              <div class="code-line"><span class="line-number">07</span><span>&#125;</span></div>
+              <div class="cursor-line"><span class="cursor"></span></div>
+            </div>
+            <div class="window-status">
+              <span>main</span><span>UTF-8</span><span>CSS</span><span>Ln 7, Col 1</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: var(--text);">Implementation Challenges</h2>
+          <p style="color: var(--text-soft); margin-bottom: 16px; line-height: 1.8;">
+            The development process involved several technical hurdles and solutions:
+          </p>
+          <ul style="color: var(--text-soft); padding-left: 18px; line-height: 2; font-size: 0.95rem; margin-bottom: 35px;">
+            <li>
+              <strong>State Persistence Across Refreshes:</strong>
+              Handling instant theme application prior to DOM full-load to prevent a flash of unstyled dark content in light mode.
+            </li>
+            <li>
+              <strong>Cross-Browser Layout Shifts:</strong>
+              Ensuring complex CSS grid alignments and custom SVG custom animations remained performant and visually consistent on mobile viewports.
+            </li>
+            <li>
+              <strong>Smooth Animation Balancing:</strong>
+              Managing multiple concurrent loops (such as the canvas DNA animation, typewriters, and scroll trackers) without affecting frame rates.
+            </li>
+          </ul>
+
+          <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: var(--text);">
+            Performance Optimizations
+          </h2>
+          <p style="color: var(--text-soft); margin-bottom: 16px; line-height: 1.8;">
+            To ensure an optimal user experience and fast loading speeds, several strategies were applied:
+          </p>
+          <ol style="color: var(--text-soft); padding-left: 18px; line-height: 2; font-size: 0.95rem; margin-bottom: 35px;">
+            <li>
+              <strong>Hardware-Accelerated Transitions:</strong>
+              Utilized CSS transform and opacity layers combined with will-change properties to offload rendering to the GPU.
+            </li>
+            <li>
+              <strong>Asset Minimization & Zero-Framework Bloat:</strong>
+              Compressing assets and leveraging vanilla web code for rapid loading.
+            </li>
+            <li>
+              <strong>Edge Caching & Deployment:</strong>
+              Hosted via Vercel's global content delivery network for minimal latency and fast global delivery.
+            </li>
+          </ol>
+
+          <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: var(--text);">Conclusion</h2>
+          <p style="color: var(--text-soft); line-height: 1.8; font-size: 1.02rem;">
+            The development of this portfolio successfully bridges aesthetic cyberpunk terminal design with rigorous front-end engineering standards. It stands as a functional, highly responsive ecosystem that continuously represents my technical growth, code cleanliness, and readiness for professional software engineering internships.
+          </p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© 2026 Federico Justian Wijono</span>
+      <a href="#top" class="back-to-top-link">
+        back to top 
+        <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+      </a>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

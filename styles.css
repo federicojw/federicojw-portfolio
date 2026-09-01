@@ -1879,7 +1879,7 @@ button:hover .icon-arrow {
   }
 }
 
-/* --- BREATHING GLOW & TILT HOVER EFFECT --- */
+/* --- BREATHING GLOW & SMOOTH HOVER EFFECT --- */
 @keyframes breathingGlow {
   0% {
     border-color: rgba(34, 211, 238, 0.25);
@@ -1898,114 +1898,155 @@ button:hover .icon-arrow {
 .code-window,
 .about-terminal,
 .about-overview {
-  animation: breathingGlow 2s infinite alternate ease-in-out !important;
-  /* Transisi diperhalus untuk semua properti (transform, box-shadow, border-color) */
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 0.6s ease-in-out,
-              border-color 0.4s ease-in-out !important;
+  animation: breathingGlow 2s infinite alternate ease-in-out;
+  /* Masukkan transform ke dalam transition secara eksplisit */
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease,
+              background-color 0.35s ease !important;
   will-change: transform, box-shadow, border-color;
 }
 
 .code-window:hover,
 .about-terminal:hover,
 .about-overview:hover {
-  transform: translateY(-6px) rotate(1deg) scale(1.02) !important;
+  /* Pause animasi breathing pas di-hover biar transisi shadow & border berjalan mulus */
+  animation-play-state: paused;
+  transform: translateY(-6px) scale(1.01) !important;
   border-color: var(--cyan) !important;
-  box-shadow: 0 20px 50px rgba(34, 211, 238, 0.4), 
-              0 25px 90px rgba(59, 130, 246, 0.3), 
+  box-shadow: 0 20px 50px rgba(34, 211, 238, 0.35), 
+              0 25px 90px rgba(59, 130, 246, 0.25), 
               var(--shadow) !important;
 }
 
-/* --- SEQUENTIAL CINEMATIC INTRO & ENTRANCE ANIMATION --- */
-
-/* 1. Layar Intro awal */
+/* ==========================================
+  CINEMATIC SCI-FI SHUTTER SPLASH / INTRO
+   ========================================== */
 .intro-overlay {
   position: fixed;
   inset: 0;
   z-index: 999999;
-  background: #070b10;
+  background: transparent !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
+  pointer-events: auto;
+  transition: visibility 0.8s ease;
 }
 
-/* --- CINEMATIC OUTRO & HERO ENTRANCE EFFECT --- */
-
-/* Efek Outro saat Intro ditutup (melayang ke atas sambil memudar) */
-.intro-overlay.fade-out {
-  opacity: 0;
-  transform: translateY(-20px) scale(1.02);
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
-              visibility 0.7s ease;
+/* --- DUA PANEL PINTU SHUTTER (ATAS & BAWAH) --- */
+.intro-overlay::before,
+.intro-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #070b10;
+  z-index: 1;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: transform;
 }
 
+/* Garis Neon Cyan di Garis Tengah Pemisah */
+.intro-overlay::before {
+  top: 0;
+  border-bottom: 2px solid var(--cyan);
+  box-shadow: 0 4px 25px rgba(34, 211, 238, 0.6);
+}
+
+.intro-overlay::after {
+  bottom: 0;
+  border-top: 2px solid var(--cyan);
+  box-shadow: 0 -4px 25px rgba(34, 211, 238, 0.6);
+}
+
+/* Konten Teks & Terminal Bar */
 .intro-content {
+  position: relative;
+  z-index: 2;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.intro-code-tag {
-  font-family: var(--mono);
-  font-size: 1.5rem;
-  color: var(--cyan);
-  padding: 10px 14px;
-  border: 1px solid rgba(34, 211, 238, 0.3);
-  border-radius: 10px;
-  background: rgba(34, 211, 238, 0.05);
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+/* Indikator Selesai (Warna Hijau Menyala) */
+.intro-overlay.ready #terminalBar {
+  color: var(--green) !important;
 }
 
-.intro-title {
-  font-family: var(--mono);
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -0.02em;
+.intro-overlay.ready #loaderPercent {
+  color: var(--green) !important;
+  text-shadow: 0 0 12px var(--green);
 }
 
-.intro-subtitle {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+/* Animasi Membuka (Kebelah Atas & Bawah) */
+.intro-overlay.fade-out {
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.8s;
 }
 
-.intro-loader {
-  width: 160px;
-  height: 3px;
-  background: var(--border);
-  border-radius: 999px;
-  overflow: hidden;
-  margin-top: 10px;
+.intro-overlay.fade-out .intro-content {
+  opacity: 0;
+  transform: scale(0.9) translateY(-15px);
 }
 
-.intro-loader-bar {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, var(--cyan-bright), var(--blue));
-  transform: translateX(-100%);
-  animation: loadProgress 2.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+.intro-overlay.fade-out::before {
+  transform: translateY(-100%);
 }
 
-@keyframes loadProgress {
-  0% { transform: translateX(-100%); }
-  60% { transform: translateX(-20%); }
-  100% { transform: translateX(0); }
+.intro-overlay.fade-out::after {
+  transform: translateY(100%);
 }
 
-/* 2. Header Slide-Down (Hanya jalan setelah kelas .intro-done aktif) */
+/* --- ANIMASI SHUTTER MENUTUP (EXIT TRANSITION) --- */
+.intro-overlay.closing {
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* 1. Dua Panel Pintu Shutter Menutup Kembali ke Tengah */
+.intro-overlay.closing::before {
+  transform: translateY(0) !important;
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1) !important;
+}
+
+.intro-overlay.closing::after {
+  transform: translateY(0) !important;
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1) !important;
+}
+
+/* 2. Elemen Teks & Progress Bar Tetap MUNCUL & SMOOTH FADE-IN */
+.intro-overlay.closing .intro-content {
+  opacity: 1 !important;
+  transform: scale(1) translateY(0) !important;
+  transition: opacity 0.5s ease 0.1s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s !important;
+}
+
+/* --- LIGHT MODE SHUTTER ADJUSTMENT --- */
+body.light-mode .intro-overlay::before,
+body.light-mode .intro-overlay::after {
+  background: #f8fafc !important;
+}
+
+body.light-mode .intro-overlay {
+  background: transparent !important;
+}
+
+/* ==========================================
+  HERO & PAGE ENTRANCE (FIXED TIMING)
+   ========================================== */
+
+/* 1. Header Slide-Down dari Atas */
 .site-header {
   opacity: 0;
   transform: translateY(-100%);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body.intro-done .site-header {
@@ -2013,53 +2054,55 @@ body.intro-done .site-header {
   transform: translateY(0);
 }
 
-/* 3. Konten Utama Fade-In & Slide-Up Berurutan */
-.js-loaded .reveal {
+/* 2. Hero Split Entrance (Kiri: Teks, Kanan: Code Window) */
+.hero-copy {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-60px) scale(0.92);
+  will-change: transform, opacity;
 }
 
-body.intro-done .js-loaded .reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --- CONTENT ENTRANCE ANIMATION AFTER INTRO --- */
-/* Saat halaman dimuat dan kelas js-loaded aktif, elemen dengan kelas reveal akan bergeser naik dengan mulus */
-.js-loaded .reveal {
+.code-window {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(60px) scale(0.92);
+  will-change: transform, opacity;
 }
 
-.js-loaded .reveal.visible {
+/* Efek baru BISA jalan TEPAT saat kelas .intro-done ditempelkan */
+body.intro-done .hero-copy {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0) scale(1);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, 
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
 }
 
-/* --- WHOLE HOMEPAGE (HERO GRID) ENTRANCE EFFECT --- */
-.hero-grid {
+body.intro-done .code-window {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, 
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+/* 3. General Scroll Reveal (Ditahan sampai intro selesai) */
+.js-loaded .reveal {
   opacity: 0;
   transform: translateY(35px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
-body.intro-done .hero-grid {
+/* KUNCI FIX: Memastikan elemen muncul dengan animasi smooth saat intro selesai */
+body.intro-done .hero-copy,
+body.intro-done .code-window,
+body.intro-done .js-loaded .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* --- LOCK SCROLL DURING INTRO --- */
 body:not(.intro-done) {
   overflow: hidden !important;
   height: 100vh !important;
-}
-
-/* Durasi bar loading disesuaikan jadi 2 detik */
-.intro-loader-bar {
-  animation: loadProgress 2s cubic-bezier(0.65, 0, 0.35, 1) forwards !important;
 }
 
 /* --- INTRO PERCENTAGE TEXT --- */
@@ -2209,5 +2252,434 @@ body:not(.intro-done) {
 @keyframes rotateBorderBeam {
   to {
     --border-angle: 360deg;
+  }
+}
+
+/* Base Dot Styling */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* State TRUE (Nyala & Bernapas Smooth) */
+.status-dot.on {
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4);
+  animation: smoothPulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: transform, box-shadow;
+}
+
+/* State FALSE (Mati / Redup) */
+.status-dot.off {
+  background: var(--text-muted);
+  box-shadow: none;
+  animation: none;
+}
+
+@keyframes smoothPulse {
+  0% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+  }
+  70% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 8px rgba(74, 222, 128, 0);
+  }
+  100% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
+/* Styling Tombol Toggle Tema */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(34, 211, 238, 0.42);
+  border-radius: 8px;
+  background: rgba(34, 211, 238, 0.03);
+  color: var(--cyan-bright);
+  cursor: pointer;
+  z-index: 101;
+}
+
+.theme-toggle-btn .theme-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Default Dark Mode: Tampilkan Matahari, Sembunyikan Bulan */
+.moon-icon { display: none; }
+.sun-icon { display: block; }
+
+/* KETIKA LIGHT MODE AKTIF (.light-mode pada tag <html> atau <body>) */
+body.light-mode {
+  --bg: #f8fafc;
+  --bg-soft: #f1f5f9;
+  --bg-elevated: #e2e8f0;
+  --panel: #ffffff;
+  --panel-hover: #f8fafc;
+  --border: #cbd5e1;
+  --border-bright: #94a3b8;
+  --text: #0f172a;
+  --text-soft: #334155;
+  --text-muted: #64748b;
+  --cyan: #0284c7;
+  --cyan-bright: #0284c7;
+  --blue: #2563eb;
+}
+
+/* --- KONTROL ICON IKUTAN TOGGLE --- */
+body:not(.light-mode) .sun-icon { display: block; }
+body:not(.light-mode) .moon-icon { display: none; }
+
+body.light-mode .sun-icon { display: none; }
+body.light-mode .moon-icon { display: block; }
+
+/* --- PERBAIKAN WARNA & KONTRAS LIGHT MODE --- */
+body.light-mode {
+  --bg: #f8fafc;
+  --bg-soft: #f1f5f9;
+  --bg-elevated: #e2e8f0;
+  --panel: #ffffff;
+  --panel-hover: #f1f5f9;
+  --border: #cbd5e1;
+  --border-bright: #94a3b8;
+  --text: #0f172a;        /* Teks utama jadi gelap pekat agar kontras */
+  --text-soft: #334155;   /* Teks paragraf lebih gelap */
+  --text-muted: #64748b;
+  --cyan: #0284c7;
+  --cyan-bright: #0284c7;
+  --blue: #2563eb;
+}
+
+/* Memperbaiki heading/teks putih yang tadinya tak terlihat di light mode */
+body.light-mode .about-copy h3 {
+  color: #0f172a !important; 
+}
+
+body.light-mode .site-header {
+  background: rgba(248, 250, 252, 0.9);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.9);
+}
+
+body.light-mode .code-window,
+body.light-mode .about-terminal,
+body.light-mode .about-overview,
+body.light-mode .skill-card,
+body.light-mode .project-card,
+body.light-mode .media-card {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .window-top,
+body.light-mode .window-status,
+body.light-mode .terminal-top {
+  background: #f1f5f9;
+  border-bottom-color: #cbd5e1;
+  color: #475569;
+}
+
+body.light-mode .contact-card {
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border-color: #cbd5e1;
+}
+
+body.light-mode body::before {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+}
+
+/* --- PENYESUAIAN LIGHT MODE LANJUTAN UNTUK KONTRASTAS SEMPURNA --- */
+
+/* Memastikan semua h2, h3, dan teks penting di dalam section berubah menjadi gelap pekat */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6 {
+  color: var(--text) !important;
+}
+
+/* Mengubah latar belakang section dark agar tidak gelap kontras sendiri di light mode */
+body.light-mode .section-dark {
+  background: rgba(241, 245, 249, 0.6) !important;
+  border-block-color: var(--border) !important;
+}
+
+/* Memperjelas latar belakang baris kontak dan kotak terminal */
+body.light-mode .terminal-content,
+body.light-mode .code-body {
+  color: var(--text-soft) !important;
+}
+
+body.light-mode .terminal-loader-box {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+}
+
+/* Memperjelas kartu latar belakang pengalaman & credentials */
+body.light-mode .timeline-content h3,
+body.light-mode .credential h3,
+body.light-mode .project-card h3,
+body.light-mode .skill-card h3 {
+  color: #0f172a !important;
+}
+
+/* Memperbaiki border garis tabel/baris kontak agar rapi di light mode */
+body.light-mode .contact-row,
+body.light-mode .credential,
+body.light-mode .overview-item {
+  border-color: var(--border) !important;
+}
+
+/* Menyesuaikan Splash Screen saat Light Mode aktif */
+body.light-mode .intro-overlay {
+  background: #f8fafc !important;
+}
+
+body.light-mode .intro-code-tag {
+  background: rgba(2, 132, 199, 0.05);
+  border-color: rgba(2, 132, 199, 0.3);
+}
+
+body.light-mode .intro-title {
+  color: var(--text);
+}
+
+body.light-mode .terminal-loader-box {
+  background: #ffffff !important;
+  border-color: var(--border-bright);
+  box-shadow: 0 0 15px rgba(2, 132, 199, 0.08);
+}
+
+/* Menyesuaikan label/tag di dalam foto card saat Light Mode aktif */
+body.light-mode .photo-label {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: var(--cyan) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Efek transisi halus saat beralih antara Dark dan Light Mode */
+body,
+.site-header,
+.code-window,
+.about-terminal,
+.about-overview,
+.skill-card,
+.project-card,
+.contact-card,
+.terminal-loader-box,
+.photo-label {
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color 0.4s ease, 
+              color 0.4s ease, 
+              border-color 0.4s ease, 
+              box-shadow 0.4s ease !important;
+}
+
+/* Memperjelas kontras teks pada tombol utama (View site / Ask about) saat Light Mode aktif */
+body.light-mode .button-primary {
+  color: #ffffff !important;
+  background: #0284c7 !important;
+  font-weight: 700;
+}
+
+body.light-mode .button-primary:hover {
+  background: #0369a1 !important;
+  color: #ffffff !important;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE FIX (PROJECT DETAIL)
+   ========================================== */
+@media (max-width: 768px) {
+  /* Container Layout Utama */
+  .project-detail-grid,
+  .project-layout,
+  .project-content-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.75rem !important;
+  }
+
+  /* 1. Key Features / Deskripsi Utama naik ke ATAS */
+  .project-main-content,
+  .project-description,
+  .key-features-section {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  /* 2. Project Info Sidebar turun ke BOWAHH */
+  .project-sidebar,
+  .project-info-card,
+  .project-meta-box {
+    order: 2 !important;
+    width: 100% !important;
+  }
+
+  /* Penyesuaian Teks & Spasi Key Features di Mobile */
+  .key-features-section h2,
+  .project-main-content h2 {
+    font-size: 1.35rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .key-features-section p,
+  .project-main-content p {
+    font-size: 0.925rem !important;
+    line-height: 1.6 !important;
+    word-break: break-word;
+  }
+
+  /* Penyesuaian Grid Dalam Project Info Card */
+  .project-info-card,
+  .project-meta-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* Dibuat 2 kolom rapi di mobile */
+    gap: 1rem !important;
+    padding: 1.25rem !important;
+  }
+
+  /* Jika ada item bertipe full-width di dalam info card */
+  .project-info-item.full-width {
+    grid-column: span 2 !important;
+  }
+
+  .project-info-item label {
+    font-size: 0.75rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .project-info-item value,
+  .project-info-item p,
+  .project-info-item span {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Extra penyesuaian untuk layar sangat kecil (HP < 480px) */
+@media (max-width: 480px) {
+  .project-info-card,
+  .project-meta-grid {
+    grid-template-columns: 1fr !important; /* Ubah ke 1 kolom jika layar sangat sempit */
+  }
+}
+
+/* ==========================================
+   FIX LAYOUT KEY FEATURES & PROJECT INFO
+   ========================================== */
+.features-info-container {
+  display: grid;
+  grid-template-columns: 1.8fr 1.2fr;
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 50px;
+}
+
+.project-info-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-soft);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  gap: 10px;
+}
+
+.info-row.no-border {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Penyesuaian khusus Mobile / Tablet (< 768px) */
+@media (max-width: 768px) {
+  .features-info-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+    margin-bottom: 40px !important;
+  }
+
+  /* Key features di atas */
+  .key-features-box {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  /* Project Info di bawah */
+  .project-info-mobile-box {
+    order: 2 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .key-features-box ul {
+    font-size: 0.88rem !important;
+    padding-left: 16px !important;
+  }
+
+  .info-row {
+    font-size: 0.72rem !important;
+  }
+}
+
+/* EFEK HOVER ZOOM PADA PROJECT INFO BOX */
+.project-info-mobile-box {
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
+              box-shadow 0.35s ease, 
+              border-color 0.35s ease !important;
+  will-change: transform, box-shadow;
+}
+
+.project-info-mobile-box:hover {
+  animation-play-state: paused !important; /* Tahan breathing glow pas di-hover */
+  transform: translateY(-6px) scale(1.03) !important; /* Efek naik dan zoom smooth */
+  border-color: var(--cyan) !important;
+  box-shadow: 0 20px 45px rgba(34, 211, 238, 0.35), 
+              0 0 30px rgba(34, 211, 238, 0.2) !important;
+}
+
+/* --- FIX MOBILE NAV MENU UNTUK LIGHT MODE --- */
+@media (max-width: 850px) {
+  body.light-mode .nav {
+    background: rgba(248, 250, 252, 0.96) !important;
+    border-color: var(--border) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  body.light-mode .nav-link {
+    color: var(--text-soft) !important;
+  }
+
+  body.light-mode .nav-link:hover,
+  body.light-mode .nav-link.active {
+    color: var(--cyan) !important;
   }
 }

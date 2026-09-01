@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<!-- CREATIVE INTRO SPLASH SCREEN -->
+  <!-- CREATIVE INTRO SPLASH SCREEN -->
   <div class="intro-overlay" id="introOverlay">
     <div class="intro-content">
       <span class="intro-code-tag">&lt;/&gt;</span>
@@ -72,6 +72,12 @@
         Contact me 
         <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
       </a>
+      <!-- TOMBOL TOGGLE DARK / LIGHT MODE -->
+      <button class="theme-toggle-btn enhanced-btn" id="themeToggleBtn" aria-label="Toggle theme" title="Switch Theme">
+        <!-- Icon Bulan (Aktif saat Dark Mode) -->
+        <svg class="theme-icon moon-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-icon sun-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
     </div>
   </header>
 
@@ -80,7 +86,7 @@
     <section class="hero section" id="hero">
       <div class="container hero-grid">
         <div class="hero-copy reveal">
-          <p class="eyebrow"><span class="status-dot"></span> available for internship opportunities</p>
+          <p class="eyebrow"><span class="status-dot on"></span> available for internship opportunities</p>
 
           <h1 class="hero-title">
             <span class="greeting-word" id="greetingRotator">Hello</span>,<br>
@@ -215,7 +221,7 @@
             </div>
 
             <div class="about-copy">
-<h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">Front-End Developer & Aspiring Software Engineer</h3>
+              <h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">Front-End Developer & Aspiring Software Engineer</h3>
               <p>
                 I'm <strong>Federico Justian Wijono</strong>, usually called <strong>Fico</strong>.
                 I'm currently studying in the <strong>Master of Computer Science (Master Track)</strong>
@@ -359,6 +365,34 @@
         </div>
 
         <div class="projects-list" data-collection="projects">
+          <article class="project-card reveal" data-entity="project" data-id="developer-portfolio">
+            <div class="skill-icon">💻</div>
+            <div class="project-main">
+              <div class="project-top"><span class="project-type">web development · 2026</span></div>
+              <h3>Personal Portofolio Website</h3>
+              <p>Personal portfolio website built to present my projects, technical skills, education, and experience through a responsive developer-focused interface.</p>
+              <div class="project-tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+                <span>Git</span>
+                <span>Vercel</span>
+                <span>UI/UX</span>
+                <span>Responsive</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px;">
+              <a class="button button-primary enhanced-btn" href="https://federicojw.my.id/" target="_blank" rel="noopener noreferrer">
+                View site 
+                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+              <a class="button button-secondary enhanced-btn" href="projects-portofolio.html">
+                View detail 
+                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+            </div>
+          </article>
+
           <article class="project-card reveal" data-entity="project" data-id="percava">
             <div class="skill-icon">&lt;/&gt;</div>
             <div class="project-main">
@@ -372,10 +406,16 @@
                 <span>Vercel</span>
               </div>
             </div>
-            <a class="project-action enhanced-btn" href="https://percava.vercel.app" target="_blank" rel="noopener noreferrer">
-              View live 
-              <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </a>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px;">
+              <a class="button button-primary enhanced-btn" href="https://percava.vercel.app/" target="_blank" rel="noopener noreferrer">
+                View site 
+                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+              <a class="button button-secondary enhanced-btn" href="projects-percava.html">
+                View detail 
+                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+            </div>
           </article>
 
           <article class="project-card reveal reveal-delay" data-entity="project" data-id="attendance-tracking">
@@ -390,32 +430,16 @@
                 <span>Automation</span>
               </div>
             </div>
-            <a class="project-action enhanced-btn" href="https://wa.me/6281239676778" target="_blank" rel="noopener noreferrer">
-              Ask about 
-              <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </a>
-          </article>
-
-          <article class="project-card reveal" data-entity="project" data-id="developer-portfolio">
-            <div class="skill-icon">💻</div>
-            <div class="project-main">
-              <div class="project-top"><span class="project-type">web development · 2026</span></div>
-              <h3>Developer Portfolio</h3>
-              <p>Personal portfolio website built to present my projects, technical skills, education, and experience through a responsive developer-focused interface.</p>
-              <div class="project-tags">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>JavaScript</span>
-                <span>Git</span>
-                <span>Vercel</span>
-                <span>UI/UX</span>
-                <span>Responsive</span>
-              </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px;">
+              <a class="button button-primary enhanced-btn" href="https://wa.me/6281239676778" target="_blank" rel="noopener noreferrer">
+                Ask about
+                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+              <!-- <a class="button button-secondary enhanced-btn" href="projects-attendance.html">
+                View detail 
+                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a> -->
             </div>
-            <a class="project-action enhanced-btn" href="https://federicojw.my.id/">
-              View site 
-              <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </a>
           </article>
         </div>
       </div>
@@ -520,7 +544,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <span>© 2026 Federico Justian Wijono</span>
-      <a href="#top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="back-to-top-link">
+      <a href="#top" class="back-to-top-link">
         back to top 
         <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
       </a>
