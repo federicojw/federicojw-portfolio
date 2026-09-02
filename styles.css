@@ -921,6 +921,7 @@ body.cursor-active .cursor-glow {
   font-family: var(--mono);
   font-size: 0.58rem;
   backdrop-filter: blur(8px);
+  text-align: center;
 }
 
 .about-content {
@@ -1031,7 +1032,7 @@ body.cursor-active .cursor-glow {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 40px;
-  align-items: center;
+  align-items: start;
   position: relative;
 }
 
@@ -1117,6 +1118,62 @@ body.cursor-active .cursor-glow {
   aspect-ratio: 16 / 9 !important;
   margin: 0 auto;
   justify-self: center;
+}
+
+/* --- EXPERIENCE CATEGORIES & BULLET POINTS --- */
+.experience-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.exp-category-title {
+  margin-top: 45px !important;
+  margin-bottom: 20px !important;
+}
+
+.exp-category-title:first-child {
+  margin-top: 0 !important;
+}
+
+.exp-category-title h3 {
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.exp-category-title .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.4), transparent);
+}
+
+.timeline-list {
+  margin-top: 13px;
+  padding-left: 18px;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  list-style-type: none;
+}
+
+.timeline-list li {
+  position: relative;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.timeline-list li::before {
+  content: "▹";
+  position: absolute;
+  left: -18px;
+  color: var(--cyan);
+  font-weight: bold;
+}
+
+body.light-mode .exp-category-title .line {
+  background: linear-gradient(90deg, rgba(2, 132, 199, 0.4), transparent);
 }
 
 /* Projects Section (FIXED OVERLAP & SPACING) */
@@ -2681,5 +2738,35 @@ body.light-mode .button-primary:hover {
   body.light-mode .nav-link:hover,
   body.light-mode .nav-link.active {
     color: var(--cyan) !important;
+  }
+}
+
+/* --- FIX TIMELINE DOT ALIGNMENT & MARGIN --- */
+.timeline-content h3 {
+  margin-top: 0 !important;
+}
+
+.timeline-marker {
+  margin-top: 8px !important;
+}
+
+.exp-row .timeline-item::before {
+  top: 12px !important;
+}
+
+@media (max-width: 850px) {
+  .exp-row .timeline-item::before {
+    top: 12px !important;
+  }
+}
+
+@media (min-width: 851px) {
+  .exp-row .timeline-item {
+    grid-template-columns: 65px 1px 1fr !important;
+    gap: 20px !important;
+  }
+  
+  .exp-row .timeline-item::before {
+    left: 85px !important;
   }
 }
