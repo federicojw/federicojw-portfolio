@@ -53,7 +53,6 @@ function updateNavIndicator() {
 }
 
 function updateActiveNav() {
-  // 1. Jika TIDAK ADA section dengan ID (seperti di halaman detail project), matikan indikator active
   if (!sections || sections.length === 0) {
     navLinks.forEach((link) => link.classList.remove("active"));
     return;
@@ -65,7 +64,6 @@ function updateActiveNav() {
 
   let current = "";
 
-  // 2. Hanya hitung section yang aktif jika posisi scroll > 10px
   if (window.scrollY > 10) {
     const marker = window.scrollY + headerHeight + Math.min(window.innerHeight * 0.28, 220);
 
@@ -77,16 +75,13 @@ function updateActiveNav() {
       current = sections.at(-1)?.id || current;
     }
   } else {
-    // Kalau posisi paling atas (scrollY <= 10), aktifkan section paling pertama jika ada
     current = sections[0]?.id || "";
   }
 
-  // 3. Cocokkan tautan href dengan ID section yang ditemukan
   navLinks.forEach((link) => {
     const href = link.getAttribute("href");
     const isAnchor = href && href.startsWith("#");
     
-    // Hanya nyalakan active jika section ID-nya benar-benar cocok
     if (isAnchor && current) {
       link.classList.toggle("active", href === `#${current}`);
     } else {
@@ -110,7 +105,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealItems.forEach((item) => revealObserver.observe(item));
 
-// --- ROLE ROTATOR (HERO TITLE) ---
+// --- ROLE ROTATOR ---
 function startRoleRotator() {
   if (!roleRotator) return;
   let roleIndex = 0;
@@ -146,7 +141,7 @@ function startRoleRotator() {
 }
 startRoleRotator();
 
-// --- HEADER AVAILABLE ROTATOR (1500ms) ---
+// --- HEADER AVAILABLE ROTATOR ---
 function startAvailableRotator() {
   const iconEl = document.getElementById("rotatorIcon");
   const textEl = document.getElementById("rotatorRoleText");
@@ -179,7 +174,7 @@ function startAvailableRotator() {
 }
 startAvailableRotator();
 
-// --- GREETING ROTATOR (2000ms) ---
+// --- GREETING ROTATOR ---
 function startGreetingRotator() {
   const greetingEl = document.getElementById("greetingRotator");
   if (!greetingEl) return;
@@ -252,7 +247,7 @@ function renderProgressBar() {
 }
 requestAnimationFrame(renderProgressBar);
 
-// --- TERMINAL PROGRESS BAR SCRIPT (INSTANT START & SMOOTH SHUTTER SPLIT) ---
+// --- TERMINAL PROGRESS BAR SCRIPT ---
 (function runIntroLoader() {
   const introOverlay = document.getElementById("introOverlay");
   const percentEl = document.getElementById("loaderPercent");
@@ -261,7 +256,7 @@ requestAnimationFrame(renderProgressBar);
   if (!introOverlay) return;
 
   let currentPercent = 0;
-  const duration = 800; // Durasi total loading (0.8 detik) - makin cepat!
+  const duration = 800; 
   const intervalTime = 16; 
   const totalBlocks = 20; 
   const step = 100 / (duration / intervalTime);
@@ -273,10 +268,8 @@ requestAnimationFrame(renderProgressBar);
       currentPercent = 100;
       clearInterval(counterInterval);
 
-      // 1. Ubah warna teks ke hijau neon (Ready State)
       introOverlay.classList.add("ready");
 
-      // 2. Langsung jalankan animasi kebelah pintu shutter & tampilkan konten
       setTimeout(() => {
         introOverlay.classList.add("fade-out");
         document.body.classList.add("intro-done");
@@ -300,15 +293,15 @@ const statusDot = document.querySelector('.status-dot');
 
 if (statusEyebrow && statusDot) {
   statusEyebrow.addEventListener('pointerenter', () => {
-    statusDot.style.animationDuration = '1.2s'; // Berdetak lebih cepat saat disentuh kursor
+    statusDot.style.animationDuration = '1.2s';
   });
   
   statusEyebrow.addEventListener('pointerleave', () => {
-    statusDot.style.animationDuration = '2.4s'; // Kembali normal
+    statusDot.style.animationDuration = '2.4s';
   });
 }
 
-// --- THEME TOGGLE (DARK / LIGHT MODE) ---
+// --- THEME TOGGLE ---
 const themeToggleBtn = document.getElementById("themeToggleBtn");
 const savedTheme = localStorage.getItem("portfolio_theme");
 
@@ -322,57 +315,14 @@ themeToggleBtn?.addEventListener("click", () => {
   localStorage.setItem("portfolio_theme", isLight ? "light" : "dark");
 });
 
-// --- SHUTTER CLOSING TRANSITION UNTUK NAVIGASI INTERNAL ---
-document.addEventListener("click", (e) => {
-  const link = e.target.closest("a");
-  if (!link) return;
-
-  const href = link.getAttribute("href");
-  const isDownload = link.hasAttribute("download");
-  const isExternal = link.getAttribute("target") === "_blank" || (href && href.startsWith("http"));
-
-  // Abaikan scroll internal (#), mailto, tel, dan tombol download CV
-  if (!href || href.startsWith("#") || href.startsWith("javascript:") || href.startsWith("mailto:") || href.startsWith("tel:") || isDownload) {
-    return;
-  }
-
-  // JIKA LINK INTERNAL (View Detail, Back to Projects, Navigasi antarhalaman)
-  if (!isExternal) {
-    e.preventDefault(); 
-    const introOverlay = document.getElementById("introOverlay");
-
-    if (introOverlay) {
-      // 1. Reset angka ke 0% & hapus status ready hijau
-      const percentEl = document.getElementById("loaderPercent");
-      const terminalBarEl = document.getElementById("terminalBar");
-      if (percentEl) percentEl.textContent = "0%";
-      if (terminalBarEl) terminalBarEl.textContent = "[--------------------]";
-
-      // 2. Reset animasi halaman
-      document.body.classList.remove("intro-done");
-
-      // 3. Pasang efek tutup tirai & tampilkan elemen loader
-      introOverlay.classList.remove("fade-out", "ready");
-      introOverlay.classList.add("closing");
-
-      // 4. Pindah halaman tepat setelah tirai rapat (400ms)
-      setTimeout(() => {
-        window.location.href = href;
-      }, 400);
-    } else {
-      window.location.href = href;
-    }
-  }
-});
-
-// --- CUSTOM SMOOTH SCROLL (KECEPATAN DISAMAKAN DENGAN VIEW MY WORK) ---
+// --- CUSTOM SMOOTH SCROLL FUNCTION ---
 function fastScrollTo(targetY, baseDuration = 550) {
   const startPosition = window.scrollY;
   const distance = targetY - startPosition;
   const startTime = performance.now();
 
   const isMobile = window.innerWidth <= 850;
-  const duration = isMobile ? 650 : baseDuration; 
+  const duration = isMobile ? 650 : baseDuration;
 
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
@@ -392,40 +342,103 @@ function fastScrollTo(targetY, baseDuration = 550) {
   requestAnimationFrame(animation);
 }
 
-// 1. Event listener khusus Navigasi Header (Home, About, Skills, dll)
-navLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    const href = link.getAttribute("href");
+// --- UNIFIED SMOOTH SCROLL & SHUTTER CLOSING TRANSITION (FIXED) ---
+function cleanPath(path) {
+  return path.replace(/\/index\.html$/, "/").replace(/\/$/, "");
+}
 
-    // Cek apakah link menuju ID lokal (#about, #projects, dll) di halaman ini
-    if (href && href.startsWith("#") && href.length > 1) {
-      const targetSection = document.querySelector(href);
+document.addEventListener("click", (e) => {
+  const link = e.target.closest("a");
+  if (!link) return;
 
-      if (targetSection) {
-        e.preventDefault(); // Tahan scroll kaku bawaan browser
-        closeMenu();       // Tutup menu mobile jika sedang terbuka
+  const href = link.getAttribute("href");
+  if (!href) return;
 
-        // Hitung posisi elemen dikurangi tinggi header
-        const headerHeight = parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue("--header")
-        ) || 74;
+  const isDownload = link.hasAttribute("download");
+  const isTargetBlank = link.getAttribute("target") === "_blank";
 
-        const targetY = Math.max(0, targetSection.offsetTop - headerHeight + 5);
+  if (
+    href.startsWith("javascript:") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:") ||
+    isDownload ||
+    isTargetBlank
+  ) {
+    return;
+  }
 
-        // Jalankan scroll cepat (350ms)
-        fastScrollTo(targetY, 350);
-      }
+  let linkUrl = null;
+  try {
+    linkUrl = new URL(href, window.location.href);
+  } catch (err) {
+    return;
+  }
+
+  // Cek apakah menuju origin (domain) yang sama
+  if (linkUrl.origin !== window.location.origin) {
+    return; // Biarkan link luar berjalan normal
+  }
+
+  const currentPath = cleanPath(window.location.pathname);
+  const targetPath = cleanPath(linkUrl.pathname);
+  const isSamePage = (currentPath === targetPath);
+  const targetHash = linkUrl.hash;
+  const targetSection = (targetHash && targetHash.length > 1) ? document.querySelector(targetHash) : null;
+
+  // CASE 1: SCROLL LOKAL DI HALAMAN YANG SAMA
+  if (isSamePage) {
+    e.preventDefault();
+    closeMenu();
+
+    if (targetSection) {
+      const headerHeight = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue("--header")
+      ) || 74;
+
+      const targetY = Math.max(0, targetSection.offsetTop - headerHeight + 5);
+      fastScrollTo(targetY, 350);
+    } else {
+      fastScrollTo(0, 300);
     }
-  });
+
+    if (targetHash && history.pushState) {
+      history.pushState(null, null, targetHash);
+    }
+    return;
+  }
+
+  // CASE 2: PINDAH HALAMAN (PAKSA EFEK SHUTTER MENUTUP)
+  e.preventDefault();
+  closeMenu();
+
+  const introOverlay = document.getElementById("introOverlay");
+
+  if (introOverlay) {
+    const percentEl = document.getElementById("loaderPercent");
+    const terminalBarEl = document.getElementById("terminalBar");
+    if (percentEl) percentEl.textContent = "0%";
+    if (terminalBarEl) terminalBarEl.textContent = "[--------------------]";
+
+    document.body.classList.remove("intro-done");
+
+    introOverlay.classList.remove("fade-out", "ready");
+    introOverlay.classList.add("closing");
+
+    setTimeout(() => {
+      window.location.href = href;
+    }, 400);
+  } else {
+    window.location.href = href;
+  }
 });
 
-// 2. Event listener khusus tombol Back to Top
+// --- BACK TO TOP ---
 document.addEventListener("click", (e) => {
   const backBtn = e.target.closest(".back-to-top-link");
   if (!backBtn) return;
 
   e.preventDefault();
-  fastScrollTo(0, 300); // Scroll cepat ke posisi paling atas (0px)
+  fastScrollTo(0, 300);
 });
 
 // --- JALANKAN ACTIVE NAV SAAT LOAD, SCROLL & RESIZE ---
@@ -433,14 +446,14 @@ window.addEventListener("DOMContentLoaded", updateActiveNav);
 window.addEventListener("scroll", updateActiveNav, { passive: true });
 window.addEventListener("resize", updateNavIndicator);
 
-// Auto-scroll pas ke hash tujuan saat halaman dimuat (terutama setelah pindah halaman)
+// Auto-scroll pas ke hash tujuan saat halaman dimuat
 window.addEventListener("DOMContentLoaded", () => {
   if (window.location.hash) {
     const targetElement = document.querySelector(window.location.hash);
     if (targetElement) {
       setTimeout(() => {
         targetElement.scrollIntoView({ behavior: "smooth" });
-      }, 300); // Beri jeda sedikit agar splash screen selesai termuat
+      }, 300);
     }
   }
 });
