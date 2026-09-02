@@ -365,15 +365,14 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// --- CUSTOM SMOOTH SCROLL (DESKTOP & MOBILE RESPONSIVE SPEED) ---
-function fastScrollTo(targetY, baseDuration = 350) {
+// --- CUSTOM SMOOTH SCROLL (KECEPATAN DISAMAKAN DENGAN VIEW MY WORK) ---
+function fastScrollTo(targetY, baseDuration = 550) {
   const startPosition = window.scrollY;
   const distance = targetY - startPosition;
   const startTime = performance.now();
 
-  // Layar HP modern (<= 850px) memakai 500ms agar sangat smooth di layar 120Hz
   const isMobile = window.innerWidth <= 850;
-  const duration = isMobile ? 500 : baseDuration; 
+  const duration = isMobile ? 650 : baseDuration; 
 
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
@@ -433,3 +432,15 @@ document.addEventListener("click", (e) => {
 window.addEventListener("DOMContentLoaded", updateActiveNav);
 window.addEventListener("scroll", updateActiveNav, { passive: true });
 window.addEventListener("resize", updateNavIndicator);
+
+// Auto-scroll pas ke hash tujuan saat halaman dimuat (terutama setelah pindah halaman)
+window.addEventListener("DOMContentLoaded", () => {
+  if (window.location.hash) {
+    const targetElement = document.querySelector(window.location.hash);
+    if (targetElement) {
+      setTimeout(() => {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+      }, 300); // Beri jeda sedikit agar splash screen selesai termuat
+    }
+  }
+});
