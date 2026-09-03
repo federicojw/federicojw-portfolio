@@ -7,13 +7,15 @@ A responsive developer portfolio built with plain HTML, CSS, and JavaScript.
 - `index.html` — semantic page structure and portfolio content
 - `projects-portofolio.html` — dedicated project detail page for the portfolio website
 - `projects-percava.html` — dedicated project detail page for the Percava web platform
-- `styles.css` — visual system, layout, responsive rules, and animations
-- `script.js` — mobile navigation, moving active-section indicator, back-to-top, role typing, cursor glow, interactive DNA canvas, scroll reveal, and future CRUD data hooks
+- `projects-attendance.html` — dedicated project detail page for the attendance tracking system
+- `projects-template.html` — reusable template file for generating new project detail pages
+- `styles.css` — visual system, layout, responsive rules, animations, continuous gear spin, and theme toggling
+- `script.js` — mobile navigation, moving active-section indicator, back-to-top, role typing, cursor glow, interactive DNA canvas, scroll reveal, and theme persistence
 - `assets/fico-profile.png` — profile photo used in the About section
 - `assets/exp-photo_1.png` to `assets/exp-photo_4.png` — experience landscape photocard images
 - `assets/Federico_Justian_Wijono_CV.pdf` — local CV download used by the Home button
 - `assets/E-Sertif_Nvidia-Fundamental_DL.pdf` — NVIDIA Fundamentals of Deep Learning certificate
-- `assets/logo-web.svg` — custom browser favicon
+- `assets/logo-web.svg` — custom browser favicon with versioning (`?v=2`)
 
 ## Run locally
 
@@ -39,15 +41,15 @@ The Experience section uses a continuous vertical timeline paired with custom 16
 
 ### Credentials
 
-The Credentials section includes the NVIDIA Fundamentals of Deep Learning certificate with a compact **View certificate** button. Replace the PDF or update the link when adding future credentials.
+The Credentials section includes professional certificates with compact **View certificate** buttons. Replace the PDFs or update the links when adding future credentials.
 
-### Projects
+### Projects & Reusable Template
 
-The Projects section uses reusable cards for live and private projects. Duplicate a `.project-card` and edit its content when adding a project.
+The Projects section includes live and system projects. To add a new project detail page, duplicate `projects-template.html`, rename it, update the content, and link it from `index.html`.
 
 ## Design direction
 
-Dark developer/editor aesthetic inspired by VS Code, using cyan/blue accents, monospace UI details, subtle grid texture, and restrained motion.
+Dark developer/editor aesthetic inspired by VS Code, using cyan/blue accents, monospace UI details, subtle grid texture, continuous gear rotation, and restrained motion.
 
 ## Interaction layer
 
