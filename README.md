@@ -5,7 +5,7 @@ A responsive developer portfolio built with plain HTML, CSS, and JavaScript.
 ## Structure
 
 - `index.html` — semantic page structure and portfolio content
-- `projects-portofolio.html` — dedicated project detail page for the portfolio website
+- `projects-portfolio.html` — dedicated project detail page for the portfolio website
 - `projects-percava.html` — dedicated project detail page for the Percava web platform
 - `projects-attendance.html` — dedicated project detail page for the attendance tracking system
 - `projects-template.html` — reusable template file for generating new project detail pages
