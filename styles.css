@@ -2770,3 +2770,25 @@ body.light-mode .button-primary:hover {
     left: 85px !important;
   }
 }
+
+/* Animasi Gear SVG Berputar */
+@keyframes spinGear {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gear-spin-svg {
+  width: 20px;
+  height: 20px;
+  animation: spinGear 8s linear infinite;
+  transition: animation-duration 0.3s ease;
+}
+
+/* Bikin putarannya makin kencang pas kartu di-hover */
+.skill-card:hover .gear-spin-svg {
+  animation-duration: 2.5s;
+}
